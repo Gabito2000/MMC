@@ -1,5 +1,7 @@
 import random
 import time
+import sys
+
 
 random.seed(1234)
 
@@ -71,30 +73,36 @@ def perform_simulation(n):
 
     return mean_time, stddev_time, end_time - start_time
 
-# # Generar una iteración de la simulación
-# Pedir la cantidad de replicaciones
-n = int(input("Ingrese la cantidad de replicaciones a realizar: "))
+if len(sys.argv) == 2:
+    # # Generar una iteración de la simulación
+    # Pedir la cantidad de replicaciones
+    n = int(sys.argv[1])
 
-# Iniciar el tiempo de cálculo del programa
-mean_time, stddev_time, compute_time = perform_simulation(n)
+    # Iniciar el tiempo de cálculo del programa
+    mean_time, stddev_time, compute_time = perform_simulation(n)
 
-# Mostrar los resultados y el tiempo de cálculo empleado por el programa
-print(f"La media del tiempo total de construcción es {mean_time:.9f} horas.")
-print(f"La desviación estándar del tiempo total de construcción es {stddev_time:.9f} horas.")
-print(f"El tiempo de cálculo del programa fue de { compute_time:.9f} segundos.")
+    # Mostrar los resultados y el tiempo de cálculo empleado por el programa
+    print(f"La media del tiempo total de construcción es {mean_time:.9f} horas.")
+    print(f"La desviación estándar del tiempo total de construcción es {stddev_time:.9f} horas.")
+    print(f"El tiempo de cálculo del programa fue de { compute_time:.9f} segundos.")
 
-# # Generar tabla de resultados
-# with open("output.html", "w") as file:
-#     file.write("<table>")
-#     file.write("<table><tr><th>n</th><th>Media</th><th>Desviación estándar</th><th>Tiempo de ejecución</th>")
-#     i = 0
-#     # for n in [10, 10**2, 10**3, 10**4, 10**5, 10**6]:
-#     compute_time = 0
-#     while i < 6 or compute_time < 60:
-#         i += 1
-#         n = 10**i
-#         mean_time, stddev_time, compute_time = perform_simulation(n)
+if len(sys.argv) == 1:
+    # Generar tabla de resultados
+    print("Ejecutando generación de tabla de resultados")
+    print("Para generar resultados con n tieraciones ejecutar python .\code.py {numero de iteraciones}")
+    print("Ejemplo: python .\code.py 10")
+    with open("output.html", "w") as file:
+        file.write("<table>")
+        file.write("<table><tr><th>n</th><th>Media</th><th>Desviación estándar</th><th>Tiempo de ejecución</th>")
+        i = 0
+        # for n in [10, 10**2, 10**3, 10**4, 10**5, 10**6]:
+        compute_time = 0
+        while i < 6 or compute_time < 60:
+            i += 1
+            n = 10**i
+            mean_time, stddev_time, compute_time = perform_simulation(n)
 
-#         file.write(f"<tr><td>10^{i}</td><td>{mean_time:.9f}</td><td>{stddev_time:.9f}</td><td>{compute_time:.9f}</td></tr>")
+            file.write(f"<tr><td>10^{i}</td><td>{mean_time:.9f}</td><td>{stddev_time:.9f}</td><td>{compute_time:.9f}</td></tr>")
 
-#     file.write("</table>")
+        file.write("</table>")
+    print("Ejecucion terminada, arcivo output.html creado con el resultado.")

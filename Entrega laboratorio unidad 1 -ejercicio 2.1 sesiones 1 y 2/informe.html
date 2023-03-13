@@ -229,7 +229,7 @@ main {
         tiempo_dependencias = 0
         tarea.dependencias:
             for dependencias in tarea.dependencias:
-                tiempo_dependencias = max(tiempo_dependencias, calculate_time(dependency))
+                tiempo_dependencias = max(tiempo_dependencias, calcular_tiempo(dependencias))
 
         tarea.tiempo_ya_calculado = tiempo + tiempo_dependencias
         return time + tiempo_dependencias;
@@ -237,7 +237,10 @@ main {
 </span>
 
 <p>
-    Es decir, el tiempo de una tarea es el tiempo de la tarea más el tiempo de máximo de sus dependencias.
+    Es decir, el tiempo para completar una tarea es el tiempo que lleva realizar dicha tarea más el tiempo que lleva completar todas sus dependencias. <br>
+    <strong>Nota:</strong> Ya que se pueden ejecutar congruentemente: el tiempo que lleva completar todas sus dependencias es, 
+    de los tiemos de finalización de todas las dependencias de la tarea, el mayor tiempo.
+
 </p>
 
 <!-- nota -->
@@ -245,7 +248,7 @@ main {
     <strong>Nota:</strong> El tiempo de una tarea se calcula una sola vez y se guarda en la variable tiempo_ya_calculado para no tener que calcularlo de nuevo.
 
 <p>
-    Luego, para calcular simplemente se calcula el tiempo de todas las tareas y se toma el mayor. 
+    Luego, para calcular el tiempo total simplemente se calcula el tiempo de todas las tareas y se toma el mayor. 
 </p>
 
 <span>
@@ -279,7 +282,7 @@ main {
 
 <h2> Resultados </h2>
 
-<table><table><tr><th>n</th><th>Media</th><th>Desviación estándar</th><th>Tiempo de ejecución</th><tr><td>10^1</td><td>170.788913521</td><td>2.550039730</td><td>0.000985622</td></tr><tr><td>10^2</td><td>168.794128296</td><td>0.930037421</td><td>0.003998280</td></tr><tr><td>10^3</td><td>168.740707577</td><td>0.320443852</td><td>0.065947056</td></tr><tr><td>10^4</td><td>168.701523425</td><td>0.101682211</td><td>0.314821005</td></tr><tr><td>10^5</td><td>168.562635760</td><td>0.032578978</td><td>4.062653542</td></tr><tr><td>10^6</td><td>168.555526733</td><td>0.010287066</td><td>33.116520166</td></tr><tr><td>10^7</td><td>168.568049869</td><td>0.003252344</td><td>362.751809359</td></tr></table>
+<table><table><tr><th>n</th><th>Media</th><th>Desviación estándar</th><th>Tiempo de ejecución</th><tr><td>10^1</td><td>165.277014562</td><td>2.607575162</td><td>0.000000000</td></tr><tr><td>10^2</td><td>168.830955351</td><td>0.927940288</td><td>0.001030684</td></tr><tr><td>10^3</td><td>168.729076022</td><td>0.319940802</td><td>0.010998011</td></tr><tr><td>10^4</td><td>168.705920852</td><td>0.101693623</td><td>0.095003128</td></tr><tr><td>10^5</td><td>168.562475125</td><td>0.032577964</td><td>0.913008213</td></tr><tr><td>10^6</td><td>168.555544134</td><td>0.010287080</td><td>9.136094809</td></tr><tr><td>10^7</td><td>168.568048910</td><td>0.003252345</td><td>94.485114574</td></tr></table>
 <p> 
   Entorno de ejecución:
   <ul>
@@ -290,6 +293,16 @@ main {
   </ul>
 </p>
 
+<ul>
+  <li>
+  <strong> Para obtener los resultados a partir de el código proporcionado ejecutar: </strong><br>  python .\code.py <br>
+  </li> 
+  <li>
+  <strong> Para obtener un resultado con una cantidad de iteraciones especifica ejecutar: </strong><br>  python .\code.py {numero de iteraciones} <br>
+  Ejemplo: python .\code.py 10
+  </li>  
+</ul>
+
 
 <h2> Conclusiones </h2>
 
@@ -299,7 +312,8 @@ main {
     <li><strong>El tiempo de ejecución aumenta: </strong></li>
       Esto se debe a que al aumentar el número de repeticiones se aumenta el tiempo de ejecución de la función calcular_tiempo_total(), ya que se calcula el tiempo de cada tarea más veces.
     <li><strong> La desviación estándar disminuye: </strong></li>
-      Esto se debe a que al aumentar el número de repeticiones se llega a un valor promedio más cercano al valor real, por lo que la desviación estándar disminuye.
+      Esto se debe a que al aumentar el número de repeticiones podemos asegurar con más certeza cuanto tiempo va a tardar en terminarse la obra, por lo que la desviación estándar disminuye.
+      <strong>Nota:</strong> esto quiere decir que el valor real es muy probable que se encuentre cerca de 168.568048910.
   </ul>
 </p>
 
