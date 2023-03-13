@@ -1,0 +1,297 @@
+<!--
+PAUTAS sobre cómo ENTREGAR los EJERCICIOS realizados
+Algunos ejercicios se realizarán de forma individual, para otros se requerirá trabajar en grupos de 2
+estudiantes.
+Cada ejercicio debe ser entregado mediante un breve pero claro informe (en formato .pdf, .ps, o
+.html) indicando:
+I. La identificación del ejercicio (nro. de sesión, nro. de ejercicio si corresponde).
+II. Nro de grupo asignado, Nombres completos y CI de sus integrantes.
+III. La descripción del problema (texto del ejercicio).
+IV. Una breve descripción de la solución (seudocódigo, y descripción de técnicas avanzadas si
+las hubiera). Lenguaje de implementación y bibliotecas empleadas (adjuntar el código
+fuente).
+V. En caso de pedirse resultados computacionales, se debe reportar: 0) la plataforma de
+cómputo utilizada (computadora – modelo, procesador, memoria, sistema operativo) 1) las
+semillas empleadas; 2) los tamaños de muestra, y tiempos de cálculo; 3) todos los valores de
+parámetros de entrada, tanto del problema como de configuración de las técnicas si los
+hubiera; 4) los resultados numéricos incluyendo estimaciones puntuales, varianzas o
+desviaciones estándar, e intervalos de confianza (con al menos 4 cifras significativas).
+VI. Se adjuntará también un anexo con el log de las ejecuciones (identificando sus respectivos
+parametros) y de las salidas de los programas (tanto si es en pantalla como en archivos).
+ El informe se subirá en el lugar de entrega de la plataforma EVA de cada Unidad. Bajo ningún
+concepto podrá ser publicado en las news del curso 2010, ni en los foros del curso.
+
+-->
+
+<!-- 
+Supongamos que para construir una casa debemos efectuar la siguiente
+lista de tareas:
+• T1 - cimientos - tiempo aleatorio uniforme entre 40 y 56 hs.
+• T2 - contrapiso - tiempo aleatorio uniforme entre 24 y 32 hs.
+• T3 - paredes - tiempo aleatorio uniforme entre 20 y 40 hs.
+• T4 - techo - tiempo aleatorio uniforme entre 16 y 48 hs.
+• T5 - instalación sanitaria - tiempo aleatorio uniforme entre 10 y 30 hs.
+• T6 - instalación el´ectrica - tiempo aleatorio uniforme entre 15 y 30 hs.
+Curso “M´etodos de Monte Carlo” - Facultad de Ingeniería, Universidad de la República (Uruguay) 20
+• T7 - cerramientos - tiempo aleatorio uniforme entre 20 y 25 hs.
+• T8 - pintura - tiempo aleatorio uniforme entre 30 y 50 hs.
+• T9 - revestimientos sanitarios - tiempo aleatorio uniforme entre 40 y 60
+hs.
+• T10 - limpieza final - tiempo aleatorio uniforme entre 8 y 16 hs.
+Hay ciertas dependencias que implican que una tarea no puede comenzar
+hasta haberse terminado otra previa:
+• T2, T3 dependen de 1.
+• T4 depende de 2 y 3
+• T5 depende de 2 y 3
+Curso “M´etodos de Monte Carlo” - Facultad de Ingeniería, Universidad de la República (Uruguay) 21
+• T6 depende de 3
+• T7 depende de 3
+• T8 depende de 4, 5, 6 y 7
+• T9 depende de 5
+• T10 depende de 7, 8 y 9
+Entrega 1: Ejercicio 2.1 (INDIVIDUAL):
+1. implementar un programa que reciba como parámetros de línea de
+comando (o pregunte en pantalla) la cantidad de replicaciones n a
+realizar, y emplee Monte Carlo para calcular (e imprimir) la estimación
+del tiempo total promedio desde que se comienza la obra hasta que se
+finaliza la misma, y la desviación estándar de este estimador.
+Curso “M´etodos de Monte Carlo” - Facultad de Ingeniería, Universidad de la República (Uruguay) 22
+2. Incluir código para calcular el tiempo de cálculo empleado por el
+programa.
+3. Utilizar el programa con n = 10, 102
+, 103
+, 104
+, 105
+, 106
+, y mostrar en
+una tabla las estimaciones de media y desviación estándar, así como los
+tiempos de cálculo. Discutir estos resultados. (en caso que el tiempo de
+ejecución para 106
+replicaciones sea menor que 60 segundos, agregar
+experimentos con mayor número de iteraciones, siempre multiplicando
+por 10, hasta que uno de los experimentos supere esa duración).
+-->
+
+<!-- Path: Entrega laboratorio unidad 1 -ejercicio 2.1 sesiones 1 y 2\informe.html -->
+
+<doctype html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<title>Ejercicio 2.1</title>
+
+<style type="text/css">
+
+/* Set font family and size for the entire document */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Style headings */
+h1 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+/* Add padding to paragraphs */
+p {
+  padding-bottom: 10px;
+}
+
+/* Style span snippets */
+span {
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  font-size: 90%;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+
+/* Style tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+/* Add a gray background color to the page */
+body {
+  background-color: #f5f5f5;
+}
+
+/* Add a box shadow to the main content area */
+main {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #ddd;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Ejercicio 2.1</h1>
+
+<h2> Grupo: N/A</h2>
+
+<h2> Integrantes: </h2>
+<ul>
+<li>Nombre: Gabriel Kryger</li>
+<li>CI: 4933558-9</li>
+</ul>
+
+<h2> Descripción del problema </h2>
+
+<p>Supongamos que para construir una casa debemos efectuar la siguiente lista de tareas:</p>
+
+<ul>
+    <li>T1 - cimientos - tiempo aleatorio uniforme entre 40 y 56 hs.</li>
+    <li>T2 - contrapiso - tiempo aleatorio uniforme entre 24 y 32 hs.</li>
+    <li>T3 - paredes - tiempo aleatorio uniforme entre 20 y 40 hs.</li>
+    <li>T4 - techo - tiempo aleatorio uniforme entre 16 y 48 hs.</li>
+    <li>T5 - instalación sanitaria - tiempo aleatorio uniforme entre 10 y 30 hs.</li>
+    <li>T6 - instalación eléctrica - tiempo aleatorio uniforme entre 15 y 30 hs.</li>
+    <li>T7 - cerramientos - tiempo aleatorio uniforme entre 20 y 25 hs.</li>
+    <li>T8 - pintura - tiempo aleatorio uniforme entre 30 y 50 hs.</li>
+    <li>T9 - revestimientos sanitarios - tiempo aleatorio uniforme entre 40 y 60 hs.</li>
+    <li>T10 - limpieza final - tiempo aleatorio uniforme entre 8 y 16 hs.</li>
+</ul>
+
+<p>Hay ciertas dependencias que implican que una tarea no puede comenzar hasta haberse terminado otra previa:</p>
+
+<ul>
+  <li>T2, T3 dependen de 1.</li>
+  <li>T4 depende de 2 y 3</li>
+  <li>T5 depende de 2 y 3</li>
+  <li>T6 depende de 3</li>
+  <li>T7 depende de 3</li>
+  <li>T8 depende de 4, 5, 6 y 7</li>
+  <li>T9 depende de 5</li>
+  <li>T10 depende de 7, 8 y 9</li>
+</ul>
+
+<p>Se pide:</p>
+
+<ol>
+  <li>Implementar un programa que simule la construcción de la casa, y que
+  calcule el tiempo total promedio desde que se comienza la obra hasta que
+  se finaliza la misma, y la desviación estándar de este estimador.</li>
+  <li>Incluir código para calcular el tiempo de cálculo empleado por el
+  programa.</li>
+  <li>Utilizar el programa con n = 10, 10^2, 10^3, 10^4, 10^5, 10^6 y mostrar en una tabla las 
+    estimaciones de media y desviación estándar, así como los tiempos de cálculo. Discutir estos resultados. 
+    (en caso que el tiempo de ejecución para 10^6 replicaciones sea menor que 60 segundos, agregar experimentos 
+    con mayor número de iteraciones, siempre multiplicando por 10, hasta que uno de los experimentos supere esa duración).
+  </li> 
+</ol>
+
+
+<h2> Descripción de la solución </h2>
+
+<p>El programa se encuentra implementado en el archivo <a href="code.py">ejercicio2.1.py</a></p>
+<p> 
+    Primero veremos que el tiempo de una tarea se calcula de la siguiente manera:
+</p>
+
+<span>
+    <pre>
+    def calcular_tiempo(tarea): 
+        if tarea.tiempo_ya_calculado != None:
+            return tarea.tiempo_ya_calculado
+
+        tiempo = random.uniform(tarea.tiempo_minimo, tarea.tiempo_maximo)
+        # random.uniform devuelve un número aleatorio entre los dos parámetros dados con una distribución uniforme.
+
+        tiempo_dependencias = 0
+        tarea.dependencias:
+            for dependencias in tarea.dependencias:
+                tiempo_dependencias = max(tiempo_dependencias, calculate_time(dependency))
+
+        tarea.tiempo_ya_calculado = tiempo + tiempo_dependencias
+        return time + tiempo_dependencias;
+    </pre>
+</span>
+
+<p>
+    Es decir, el tiempo de una tarea es el tiempo de la tarea más el tiempo de máximo de sus dependencias.
+</p>
+
+<!-- nota -->
+<p>
+    <strong>Nota:</strong> El tiempo de una tarea se calcula una sola vez y se guarda en la variable tiempo_ya_calculado para no tener que calcularlo de nuevo.
+
+<p>
+    Luego, para calcular simplemente se calcula el tiempo de todas las tareas y se toma el mayor. 
+</p>
+
+<span>
+    <pre>
+    def calcular_tiempo_total():
+        tiempo_total = 0
+        for tarea in tareas:
+            tiempo_total = max(tiempo_total, calcular_tiempo(tarea))
+        return tiempo_total
+    </pre>
+</span>
+
+<p>
+    Para calcular el tiempo de ejecución se utiliza la función time.time() de python al inicio y al final del programa.
+</p>
+
+<span>
+    <pre>
+    def calcular_tiempo_ejecucion(repeticiones):
+        tiempo_inicial = time.time()
+        for i in range(repeticiones):
+            calcular_tiempo_total()
+        tiempo_final = time.time()
+        tiempo_ejecucion = tiempo_final - tiempo_inicial
+    </pre>
+</span>
+
+<p>
+    Para calcular la media y la desviación estándar se utiliza el pseudocódigo dado en la página 15 de la  <a href="https://eva.fing.edu.uy/pluginfile.php/945/mod_resource/content/8/Unidad1-Sesion02.pdf"> guía de ejercicios </a>
+</p>
+
+<h2> Resultados </h2>
+
+<table><tr><th>n</th><th>mean</th><th>desviación estándar</th><th>time</th></tr><tr><td>10^1</td><td>165.557274685</td><td>2.709396036</td><td>0.001036882</td></tr><tr><td>10^2</td><td>169.450280857</td><td>0.935216847</td><td>0.005005836</td></tr><tr><td>10^3</td><td>168.363557550</td><td>0.340747025</td><td>0.046944618</td></tr><tr><td>10^4</td><td>168.465242466</td><td>0.103078097</td><td>0.214867353</td></tr><tr><td>10^5</td><td>168.528454533</td><td>0.032588338</td><td>2.345655918</td></tr><tr><td>10^6</td><td>168.562502100</td><td>0.010286130</td><td>18.043317556</td></tr><tr><td>10^7</td><td>168.565729876</td><td>0.003254333</td><td>179.487556219</td></tr></table>
+
+<p> 
+  Entorno de ejecución:
+  <ul>
+    <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
+    <li>4 GB de RAM</li>
+    <li>Sistema operativo: Windows 10</li>
+  </ul>
+</p>
+
+
+<h2> Conclusiones </h2>
+
+</body>
+</html>
