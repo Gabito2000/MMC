@@ -1,6 +1,8 @@
 import random
 import time
 
+random.seed(1234)
+
 # Definir tareas y sus tiempos aleatorios
 tasks = {
     'T1': lambda: random.uniform(40, 56),
@@ -69,35 +71,19 @@ def perform_simulation(n):
 
     return mean_time, stddev_time, end_time - start_time
 
-
-
+# # Generar una iteración de la simulación
 # Pedir la cantidad de replicaciones
 n = int(input("Ingrese la cantidad de replicaciones a realizar: "))
 
-
 # Iniciar el tiempo de cálculo del programa
 mean_time, stddev_time, compute_time = perform_simulation(n)
-
 
 # Mostrar los resultados y el tiempo de cálculo empleado por el programa
 print(f"La media del tiempo total de construcción es {mean_time:.9f} horas.")
 print(f"La desviación estándar del tiempo total de construcción es {stddev_time:.9f} horas.")
 print(f"El tiempo de cálculo del programa fue de { compute_time:.9f} segundos.")
 
-# generat the output file with the results of the simulation of Monte Carlo
-# Utilizar el programa con n = 10, 10^2
-# , 10^3
-# , 10^4
-# , 10^5
-# , 10^6
-# , y mostrar en
-# una tabla las estimaciones de media y desviaci´on est´andar, as´ı como los
-# tiempos de c´alculo. Discutir estos resultados. (en caso que el tiempo de
-# ejecuci´on para 106
-# replicaciones sea menor que 60 segundos, agregar
-# experimentos con mayor n´umero de iteraciones, siempre multiplicando
-# por 10, hasta que uno de los experimentos supere esa duraci´on)
-
+# # Generar tabla de resultados
 # with open("output.html", "w") as file:
 #     file.write("<table>")
 #     file.write("<table><tr><th>n</th><th>Media</th><th>Desviación estándar</th><th>Tiempo de ejecución</th>")
