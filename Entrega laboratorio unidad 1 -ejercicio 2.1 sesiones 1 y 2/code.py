@@ -1,6 +1,5 @@
 import random
 import time
-import statistics
 
 # Definir tareas y sus tiempos aleatorios
 tasks = {
@@ -99,17 +98,17 @@ print(f"El tiempo de cálculo del programa fue de { compute_time:.9f} segundos."
 # experimentos con mayor n´umero de iteraciones, siempre multiplicando
 # por 10, hasta que uno de los experimentos supere esa duraci´on)
 
-with open("output.html", "w") as file:
-    file.write("<table>")
-    file.write("<tr><th>n</th><th>mean</th><th>sqrt(Var_X)</th><th></th><th>time</th></tr>")
-    i = 0
-    # for n in [10, 10**2, 10**3, 10**4, 10**5, 10**6]:
-    compute_time = 0
-    while i < 6 or compute_time < 60:
-        i += 1
-        n = 10**i
-        mean_time, stddev_time, compute_time = perform_simulation(n)
+# with open("output.html", "w") as file:
+#     file.write("<table>")
+#     file.write("<table><tr><th>n</th><th>Media</th><th>Desviación estándar</th><th>Tiempo de ejecución</th>")
+#     i = 0
+#     # for n in [10, 10**2, 10**3, 10**4, 10**5, 10**6]:
+#     compute_time = 0
+#     while i < 6 or compute_time < 60:
+#         i += 1
+#         n = 10**i
+#         mean_time, stddev_time, compute_time = perform_simulation(n)
 
-        file.write(f"<tr><td>10^{i}</td><td>{mean_time:.9f}</td><td>{stddev_time:.9f}</td><td>{compute_time:.9f}</td></tr>")
+#         file.write(f"<tr><td>10^{i}</td><td>{mean_time:.9f}</td><td>{stddev_time:.9f}</td><td>{compute_time:.9f}</td></tr>")
 
-    file.write("</table>")
+#     file.write("</table>")

@@ -65,7 +65,7 @@ programa.
 , 106
 , y mostrar en
 una tabla las estimaciones de media y desviación estándar, así como los
-tiempos de cálculo. Discutir estos resultados. (en caso que el tiempo de
+tiempos de cálculo. Discutir estos resultados. (en caso de que el tiempo de
 ejecución para 106
 replicaciones sea menor que 60 segundos, agregar
 experimentos con mayor número de iteraciones, siempre multiplicando
@@ -204,7 +204,7 @@ main {
   programa.</li>
   <li>Utilizar el programa con n = 10, 10^2, 10^3, 10^4, 10^5, 10^6 y mostrar en una tabla las 
     estimaciones de media y desviación estándar, así como los tiempos de cálculo. Discutir estos resultados. 
-    (en caso que el tiempo de ejecución para 10^6 replicaciones sea menor que 60 segundos, agregar experimentos 
+    (en caso de que el tiempo de ejecución para 10^6 replicaciones sea menor que 60 segundos, agregar experimentos 
     con mayor número de iteraciones, siempre multiplicando por 10, hasta que uno de los experimentos supere esa duración).
   </li> 
 </ol>
@@ -224,7 +224,7 @@ main {
             return tarea.tiempo_ya_calculado
 
         tiempo = random.uniform(tarea.tiempo_minimo, tarea.tiempo_maximo)
-        # random.uniform devuelve un número aleatorio entre los dos parámetros dados con una distribución uniforme.
+        # random.uniform es de la librería random y devuelve un número aleatorio entre los dos parámetros dados con una distribución uniforme.
 
         tiempo_dependencias = 0
         tarea.dependencias:
@@ -279,7 +279,7 @@ main {
 
 <h2> Resultados </h2>
 
-<table><tr><th>n</th><th>mean</th><th>desviación estándar</th><th>time</th></tr><tr><td>10^1</td><td>165.557274685</td><td>2.709396036</td><td>0.001036882</td></tr><tr><td>10^2</td><td>169.450280857</td><td>0.935216847</td><td>0.005005836</td></tr><tr><td>10^3</td><td>168.363557550</td><td>0.340747025</td><td>0.046944618</td></tr><tr><td>10^4</td><td>168.465242466</td><td>0.103078097</td><td>0.214867353</td></tr><tr><td>10^5</td><td>168.528454533</td><td>0.032588338</td><td>2.345655918</td></tr><tr><td>10^6</td><td>168.562502100</td><td>0.010286130</td><td>18.043317556</td></tr><tr><td>10^7</td><td>168.565729876</td><td>0.003254333</td><td>179.487556219</td></tr></table>
+<table><tr><th>n</th><th>Media</th><th>Desviación estándar</th><th>Tiempo de ejecución</th></tr><tr><td>10^1</td><td>165.557274685</td><td>2.709396036</td><td>0.001036882</td></tr><tr><td>10^2</td><td>169.450280857</td><td>0.935216847</td><td>0.005005836</td></tr><tr><td>10^3</td><td>168.363557550</td><td>0.340747025</td><td>0.046944618</td></tr><tr><td>10^4</td><td>168.465242466</td><td>0.103078097</td><td>0.214867353</td></tr><tr><td>10^5</td><td>168.528454533</td><td>0.032588338</td><td>2.345655918</td></tr><tr><td>10^6</td><td>168.562502100</td><td>0.010286130</td><td>18.043317556</td></tr><tr><td>10^7</td><td>168.565729876</td><td>0.003254333</td><td>179.487556219</td></tr></table>
 
 <p> 
   Entorno de ejecución:
@@ -292,6 +292,17 @@ main {
 
 
 <h2> Conclusiones </h2>
+
+<p> 
+  Es facil de notar que mientras el número de repeticiones aumenta pasan dos cosas:
+  <ul>
+    <li><strong>El tiempo de ejecución aumenta: </strong></li>
+      Esto se debe a que al aumentar el número de repeticiones se aumenta el tiempo de ejecución de la función calcular_tiempo_total(), ya que se calcula el tiempo de cada tarea más veces.
+    <li><strong> La desviación estándar disminuye: </strong></li>
+      Esto se debe a que al aumentar el número de repeticiones se llega a un valor promedio más cercano al valor real, por lo que la desviación estándar disminuye.
+  </ul>
+</p>
+
 
 </body>
 </html>
