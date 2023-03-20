@@ -1,0 +1,223 @@
+<!--
+PAUTAS sobre cómo ENTREGAR los EJERCICIOS realizados
+Algunos ejercicios se realizarán de forma individual, para otros se requerirá trabajar en grupos de 2
+estudiantes.
+Cada ejercicio debe ser entregado mediante un breve pero claro informe (en formato .pdf, .ps, o
+.html) indicando:
+I. La identificación del ejercicio (nro. de sesión, nro. de ejercicio si corresponde).
+II. Nro de grupo asignado, Nombres completos y CI de sus integrantes.
+III. La descripción del problema (texto del ejercicio).
+IV. Una breve descripción de la solución (seudocódigo, y descripción de técnicas avanzadas si
+las hubiera). Lenguaje de implementación y bibliotecas empleadas (adjuntar el código
+fuente).
+V. En caso de pedirse resultados computacionales, se debe reportar: 0) la plataforma de
+cómputo utilizada (computadora – modelo, procesador, memoria, sistema operativo) 1) las
+semillas empleadas; 2) los tamaños de muestra, y tiempos de cálculo; 3) todos los valores de
+parámetros de entrada, tanto del problema como de configuración de las técnicas si los
+hubiera; 4) los resultados numéricos incluyendo estimaciones puntuales, varianzas o
+desviaciones estándar, e intervalos de confianza (con al menos 4 cifras significativas).
+VI. Se adjuntará también un anexo con el log de las ejecuciones (identificando sus respectivos
+parametros) y de las salidas de los programas (tanto si es en pantalla como en archivos).
+ El informe se subirá en el lugar de entrega de la plataforma EVA de cada Unidad. Bajo ningún
+concepto podrá ser publicado en las news del curso 2010, ni en los foros del curso.
+-->
+
+<!--
+Ejercicio 3.1 (sesión 3)
+Problema: se desea estimar el volumen de una regi´on R de [0, 1]6 definida
+por todos los puntos de la hiper-esfera de centro
+(0.45, 0.5, 0.6, 0.6, 0.5, 0.45) y radio 0.35, que adem´as cumplan las
+restricciones siguientes: 3x1 + 7x4 ≤ 5; x3 +x4 ≤ 1; x1 −x2 −x5 +x6 ≥ 0.
+Entrega 2 - Ejercicio 3.1 (individual)
+• Parte a: implementar un programa que reciba como par´ametro la
+cantidad de replicaciones n a realizar, y emplee Monte Carlo para
+calcular (e imprimir) la estimaci´on del volumen de R, y la desviaci´on
+est´andar de este estimador. Incluir c´odigo para calcular el tiempo de
+c´alculo empleado por el programa. Utilizar el programa con n = 104
+y
+luego con n = 106 para estimar el volumen de R. Discutir si los dos
+valores obtenidos parecen consistentes.
+(en la sesi´on 5 se continuar´a este ejercicio).
+• Parte b: como forma de validar el programa, eliminar las restricciones
+Curso “M´etodos de Monte Carlo” - Facultad de Ingenier´ıa, Universidad de la Rep´ublica (Uruguay) 23
+adicionales de desigualdad, y comparar el volumen calculado por Monte
+Carlo con n = 106
+con el valor exacto del volumen de una hiperesfera
+de dimensi´on 6, π
+3
+r
+6/6
+(https://web.archive.org/web/20190915215955/http:
+//www.sjsu.edu/faculty/watkins/ndim.htm - versi´on archivada, el
+original http://www.sjsu.edu/faculty/watkins/ndim.htm ya no est´a
+disponible). Discutir tambi´en la relaci´on de este valor con el obtenido
+en la parte a.
+Comentario: la hiperesfera de dimensi´on k, centro (c1, . . . ck) y radio r es
+el conjunto de puntos que verifican Pk
+i=1(xi − ci)
+2 ≤ r
+2
+.
+Fecha entrega: ver el calendario en el EVA.
+
+-->
+
+<doctype html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<title>Ejercicio 3.1</title>
+
+<style type="text/css">
+
+/* Set font family and size for the entire document */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Style headings */
+h1 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+/* Add padding to paragraphs */
+p {
+  padding-bottom: 10px;
+}
+
+/* Style span snippets */
+span {
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  font-size: 90%;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+
+/* Style tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+/* Add a gray background color to the page */
+body {
+  background-color: #f5f5f5;
+}
+
+/* Add a box shadow to the main content area */
+main {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #ddd;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Ejercicio 3.1</h1>
+
+<h2> Grupo: N/A</h2>
+
+<h2> Integrantes: </h2>
+<ul>
+<li>Nombre: Gabriel Kryger</li>
+<li>CI: 4933558-9</li>
+</ul>
+
+<h2> Descripción del problema </h2>
+
+<p>Se desea estimar el volumen de una región R de [0, 1]^6 definida por todos los puntos de la hiper-esfera de centro (0.45, 0.5, 0.6, 0.6, 0.5, 0.45) y radio 0.35, que además cumplan las restricciones siguientes: 3x<sub>1</sub> + 7x<sub>4</sub> ≤ 5; x<sub>3</sub> +x<sub>4</sub> ≤ 1; x<sub>1</sub> −x<sub>2</sub> −x<sub>5</sub> +x<sub>6</sub> ≥ 0.</p>
+<ul>
+<li>Parte a: implementar un programa que reciba como parámetro la cantidad de replicaciones n a realizar, y emplee Monte Carlo para calcular (e imprimir) la estimación del volumen de R, y la desviación estándar de este estimador. Incluir código para calcular el tiempo de cálculo empleado por el programa. Utilizar el programa con n = 10<sup>4</sup> y luego con n = 10<sup>6</sup> para estimar el volumen de R. Discutir si los dos valores obtenidos parecen consistentes. <br> (en la sesión 5 se continuará este ejercicio).</li>
+<li>Parte b: como forma de validar el programa, eliminar las restricciones adicionales de desigualdad, y comparar el volumen calculado por Monte Carlo con n = 10<sup>6</sup> con el valor exacto del volumen de una hiperesfera de dimensión 6, <a href="https://web.archive.org/web/20190915215955/http://www.sjsu.edu/faculty/watkins/ndim.htm">π<sup>3</sup>r<sup>6</sup>/6</a><br>Discutir también la relación de este valor con el obtenido en la parte a.</li>
+</ul>
+
+<p>Comentario: la hiperesfera de dimensión k, centro (c<sub>1</sub>, ..., ck) y radio r es el conjunto de puntos que verifican Σ<sub>k</sub><sup>i=1</sup>(x<sub>i</sub> − c<sub>i</sub>)<sup>2</sup> ≤ r<sup>2</sup>.</p>
+
+<h2> Descripción de la solución </h2>
+<p>El programa se encuentra implementado en el archivo <a href="code.py">ejercicio3.1.py</a></p>
+<p>La implementación se realizó en Python y se utilizó la librería <a href="https://docs.python.org/3/library/random.html">random</a> para generar números aleatorios, la librería <a href="https://docs.python.org/3/library/time.html">time</a> para medir el tiempo de ejecución y la librería <a href="https://docs.python.org/3/library/math.html">math</a> para calcular la raíz cuadrada y obtener Pi.</p>
+
+<p> 
+ Para calcular el área de la región R se utilizó el método de Monte Carlo, el cual consiste en generar n puntos aleatorios en el espacio de dimensión 6, y calcular la proporción de puntos que se encuentran dentro de la región R.
+</p>
+<p>
+  Para calcular el error de la estimación se utilizó la desviación estándar de la muestra, la cual se calcula como:
+</p>
+
+<span>
+  <pre>
+    <code>
+      σ = sqrt(1/(n-1) * Σ<sub>n</sub><sup>i=1</sup>(x<sub>i</sub> - x)<sup>2</sup>)
+    </code>
+  </pre>
+</span>
+
+<p>
+  Donde x<sub>i</sub> es la i-ésima estimación del área de la región R, y x es el promedio de las estimaciones.
+  <br>
+</p>
+
+
+<table>Ejercicio A<tr><td></td> <td>Estimado</td><td>Desviación estándar</td><td>Tiempo de ejecución</td></tr><tr><td>A1</td><td>0.0001</td><td>0.0001</td><td>0.05097031593322754</td></tr><tr><td>A2</td><td>0.000278</td><td>1.667102258180325e-05</td><td>2.8903517723083496</td></tr></table>
+<p>
+  <strong>Son los valores consistentes:</strong>
+  <br>
+  En este caso los valores sí son consistentes ya que: <ul><li>La diferencia entre el valor estimado en A1 y el valor estimado en A2 es de 0.000178</li><li>La desviación estándar de el experimento A1 es de 0.0001</li></ul>
+  Por lo tanto, el valor estimado en A2 entra dentro de 2 desviaciones del experimento A1 lo cual es raro, pero no algo imposible.
+</p>
+
+<table>Ejercicio B<tr><td>Valor calculado</td><td>Valor_exacto</td><td>Porcentaje de error</td><td>Desviación estándar</td></tr><tr><td>0.009405</td><td>0.009499628763439042</td><td>0.9961311730752823%</td><td>9.652230463242831e-05</td></tr></table>
+
+<p>
+  <strong>Relación entre el valor calculado y el valor exacto:</strong>
+  <br>
+  Es facil de ver que el valor calculado y el valor exacto son muy similares, y el valor exacto entra dentro de una desviación estándar del valor calculado. Lo cual es consistente con lo que se esperaría.
+  <br>
+  <strong>Relación entre el valor calculado y el valor estimado en la parte A:</strong>
+  <br>
+  Como en el experimento B se utilizó el mismo método de Monte Carlo que en el experimento A, se espera el comportamiento del valor calculado en la parte B sea similar al valor estimado en la parte A. Con lo cual, como el valor estimado en la parte B es aproximadamente correcto, se espera que el valor calculado en la parte A sea aproximadamente correcto.
+  <br>
+  Es notable la gran diferencia entre el valor calculado en la parte A y en la parte B
+</p>
+
+<p> 
+  Entorno de ejecución:
+  <ul>
+    <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
+    <li>4 GB de RAM</li>
+    <li>Sistema operativo: Windows 10</li>
+    <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y por lo tanto continuando con la secuencia del random).</li>
+  </ul>
+</p>
+
+</body>
+</html>
