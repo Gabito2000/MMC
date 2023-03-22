@@ -135,13 +135,13 @@ main {
   Para la parte 1 del ejercicio se siguió el siguiente procedimiento:
   <ul> 
     <li>
-      1)Se implementaron los algoritmos en Python para tener un mayor conocimiento y control sobre el problema
+      1)Se implementaron los algoritmos en Python para tener un mayor conocimiento y control sobre el problema.
     </li>
     <li>
-      2)Se analizaron las ecuaciones y se crearon teorías sobre el comportamiento de las funciones dependiendo de los parámetros ϵ y δ
+      2)Se analizaron las ecuaciones y se crearon teorías sobre el comportamiento de las funciones dependiendo de los parámetros ϵ y δ.
     </li>
     <li>
-      3)Se realizaron experimentos con los algoritmos para comprobar las teorías y obtener resultados numéricos
+      3)Se realizaron experimentos con los algoritmos para comprobar las teorías y obtener resultados numéricos.
   </ul>
 </p>
 
@@ -169,6 +169,7 @@ main {
     </li>
     <li>
       <strong>nH es el caso intermedio</strong><br>Notar que para que la hipotesis del teorico se cumpla se debe cumplir que 1/2 ≤ µ < 1. <br>(página 18 del <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf"> material de la unidad 2 sesión 4 </a>).
+      (se espera que mientras disminulla el valor de δ, nH se acerque a nN)
     </li>
   </ul>
 
@@ -184,7 +185,7 @@ main {
 </p>
 
 <p>
-  en cuanto a la dependencia de nC, nN y nH con respecto a ϵ y δ, se puede ver que:
+  En cuanto a la dependencia de nC, nN y nH con respecto a ϵ y δ, se puede ver que:
   <ul>
     <li>
       Todas son inversamente proporcionales a ϵ y δ. <br>
@@ -194,7 +195,9 @@ main {
       nN tiene de hipotesis que ϵ -> 0, por lo que en el caso de tomar un ϵ muy grande, no se puede garantizar que nN sea valida, por lo cual en esos casos se debería de optar por nC o nH. <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf"> (página 16 del material de la unidad 2 sesión 4) </a>
     </li>
     <li>
-      
+      También es de esperarse que nH varíe menos dependiendo de δ, ya que está dentro de un logaritmo.
+      (Esto se ve reflejado en nuestros experimentos también) <br>
+      Por lo tanto si se necesita un experimento con δ muy pequeño, que cumpla con las hipotesis de nH, se debería de pensar en optar por nH.
     </li>
   </ul>
 </p>
@@ -218,6 +221,38 @@ main {
 </p>
 
 <img src="./output.png" alt="Grafica" width="500" height="500">
+
+
+<p> 
+  Entorno de ejecución:
+  <ul>
+    <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
+    <li>4 GB de RAM</li>
+    <li>Sistema operativo: Windows 10</li>
+  </ul>
+</p>
+<p>
+  <strong>Para ejecutar el código:</strong> <br>
+  <ul>
+    <li>
+      instalar stats con <strong>pip install stats</strong> (esta librería se utiliza para calcular la inversa de la normal)
+    </li>
+    <li>
+      ejecutar <strong>python code.py</strong>
+    </li>
+    <li>
+      Para <strong>producir las tablas</strong> descomentar del código desde la línea 46 a la línea 47 y desde la línea 62 a la línea 63 <br>
+      Luego simplemente ejecutar <strong>python code.py</strong>
+    </li>
+    <li>
+      Para <strong>crear la gráfica</strong> descomentar del código desde la línea 12 y 13, y desde la línea 65 hasta el final del código <br>
+      Luego instalar matplotlib.pyplot con <strong>pip install matplotlib.pyplot</strong> <br>
+      Luego instalar numpy con <strong>pip install numpy</strong> <br>
+      Luego simplemente ejecutar <strong>python code.py</strong>
+    </li>
+  </ul>
+
+</p>
 
 </body>
 </html>

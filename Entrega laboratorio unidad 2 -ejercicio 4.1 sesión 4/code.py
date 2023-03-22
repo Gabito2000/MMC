@@ -9,8 +9,8 @@
 
 import math
 import scipy.stats as stats
-import matplotlib.pyplot as plt
-import numpy as np
+# import matplotlib.pyplotmatplotlib.pyplot as plt
+# import numpy as np
 
 # nC(ϵ, δ) = ⌈1/(4*δ*ϵ**2)⌉.
 def nC(epsilon, delta):
@@ -60,8 +60,6 @@ print (table)
 
 # crear tabla ejercicio 2
 # open("output.html","w", encoding="utf-8").write("<table> <tr> <th> </th> <th> nC </th> <th> nN </th> <th> nH </th> </tr> <tr> <td> ϵ = 0.01, δ = 0.001 </td> <td> " + str(table["nC"][0]) + "</td> <td> " + str(table["nN"][0]) + "</td> <td> " + str(table["nH"][0]) + "</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.01 </td> <td> " + str(table["nC"][1]) + "</td> <td> " + str(table["nN"][1]) + "</td> <td> " + str(table["nH"][1]) + "</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.05 </td> <td> " + str(table["nC"][2]) + "</td> <td> " + str(table["nN"][2]) + "</td> <td> " + str(table["nH"][2]) + "</td> </tr> </table>")
-
-#generate a graph with the results of the table
 
 # # crear el grafico
 # n_groups = 3
