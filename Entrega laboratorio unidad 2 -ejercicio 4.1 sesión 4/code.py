@@ -4,13 +4,16 @@
 # nN, nH frente a los par´ametros ϵ y δ.
 # 2. Calcular nC, nN, nH para ϵ = 0.01, δ = 0.001, 0.01, 0.05.
 # Fecha entrega: ver el calendario en el EVA.
-
+generar_tablas_y_gráfica = False
 
 
 import math
 import scipy.stats as stats
-# import matplotlib.pyplotmatplotlib.pyplot as plt
-# import numpy as np
+if generar_tablas_y_gráfica:
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+
 
 # nC(ϵ, δ) = ⌈1/(4*δ*ϵ**2)⌉.
 def nC(epsilon, delta):
@@ -41,51 +44,59 @@ table["nC"] = giveFormatToArrayNumbers(table["nC"])
 table["nN"] = giveFormatToArrayNumbers(table["nN"])
 table["nH"] = giveFormatToArrayNumbers(table["nH"])
 
-print (table)
-# #crear tabla ejercicio 1
-# open("output_table_e1.html","w", encoding="utf-8").write("<table> nC <tr> <td></td> <td> δ=" + str(delta[0]) + "</td> <td> δ=" + str(delta[1]) + "</td> <td> δ=" + str(delta[2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[0]) + "</td> <td> " + str(table["nC"][0]) + "</td> <td> " + str(table["nC"][1]) + "</td> <td> " + str(table["nC"][2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[1]) + "</td> <td> " + str(table["nC"][3]) + "</td> <td> " + str(table["nC"][4]) + "</td> <td> " + str(table["nC"][5]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[2]) + "</td> <td> " + str(table["nC"][6]) + "</td> <td> " + str(table["nC"][7]) + "</td> <td> " + str(table["nC"][8]) + "</td> </tr> </table> <table> nN <tr> <td></td> <td> δ=" + str(delta[0]) + "</td> <td> δ=" + str(delta[1]) + "</td> <td> δ=" + str(delta[2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[0]) + "</td> <td> " + str(table["nN"][0]) + "</td> <td> " + str(table["nN"][1]) + "</td> <td> " + str(table["nN"][2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[1]) + "</td> <td> " + str(table["nN"][3]) + "</td> <td> " + str(table["nN"][4]) + "</td> <td> " + str(table["nN"][5]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[2]) + "</td> <td> " + str(table["nN"][6]) + "</td> <td> " + str(table["nN"][7]) + "</td> <td> " + str(table["nN"][8]) + "</td> </tr> </table> <table> nH <tr> <td></td> <td> δ=" + str(delta[0]) + "</td> <td> δ=" + str(delta[1]) + "</td> <td> δ=" + str(delta[2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[0]) + "</td> <td> " + str(table["nH"][0]) + "</td> <td> " + str(table["nH"][1]) + "</td> <td> " + str(table["nH"][2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[1]) + "</td> <td> " + str(table["nH"][3]) + "</td> <td> " + str(table["nH"][4]) + "</td> <td> " + str(table["nH"][5]) + "</td> </tr> <tr> <td> ϵ =" + str(eps[2]) + "</td> <td> " + str(table["nH"][6]) + "</td> <td> " + str(table["nH"][7]) + "</td> <td> " + str(table["nH"][8]) + "</td> </tr> </table>")
+if generar_tablas_y_gráfica:
+    print(table)
+    open("output_table_e1.html","w", encoding="utf-8").write("<table> nC <tr> <td></td> <td> δ=" + str(delta[0]) + "</td> <td> δ=" + str(delta[1]) + "</td> <td> δ=" + str(delta[2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[0]) + "</td> <td> " + str(table["nC"][0]) + "</td> <td> " + str(table["nC"][1]) + "</td> <td> " + str(table["nC"][2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[1]) + "</td> <td> " + str(table["nC"][3]) + "</td> <td> " + str(table["nC"][4]) + "</td> <td> " + str(table["nC"][5]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[2]) + "</td> <td> " + str(table["nC"][6]) + "</td> <td> " + str(table["nC"][7]) + "</td> <td> " + str(table["nC"][8]) + "</td> </tr> </table> <table> nN <tr> <td></td> <td> δ=" + str(delta[0]) + "</td> <td> δ=" + str(delta[1]) + "</td> <td> δ=" + str(delta[2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[0]) + "</td> <td> " + str(table["nN"][0]) + "</td> <td> " + str(table["nN"][1]) + "</td> <td> " + str(table["nN"][2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[1]) + "</td> <td> " + str(table["nN"][3]) + "</td> <td> " + str(table["nN"][4]) + "</td> <td> " + str(table["nN"][5]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[2]) + "</td> <td> " + str(table["nN"][6]) + "</td> <td> " + str(table["nN"][7]) + "</td> <td> " + str(table["nN"][8]) + "</td> </tr> </table> <table> nH <tr> <td></td> <td> δ=" + str(delta[0]) + "</td> <td> δ=" + str(delta[1]) + "</td> <td> δ=" + str(delta[2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[0]) + "</td> <td> " + str(table["nH"][0]) + "</td> <td> " + str(table["nH"][1]) + "</td> <td> " + str(table["nH"][2]) + "</td> </tr> <tr> <td> ϵ=" + str(eps[1]) + "</td> <td> " + str(table["nH"][3]) + "</td> <td> " + str(table["nH"][4]) + "</td> <td> " + str(table["nH"][5]) + "</td> </tr> <tr> <td> ϵ =" + str(eps[2]) + "</td> <td> " + str(table["nH"][6]) + "</td> <td> " + str(table["nH"][7]) + "</td> <td> " + str(table["nH"][8]) + "</td> </tr> </table>")
 
 
 #2. Calcular nC, nN, nH para ϵ = 0.01, δ = 0.001, 0.01, 0.05.
 print ("ϵ = 0.01, δ = 0.001, 0.01, 0.05")
 
 table = {}
-table["nC"] = giveFormatToArrayNumbers([nC(0.01, 0.001), nC(0.01, 0.01), nC(0.01, 0.05)])
-table["nN"] = giveFormatToArrayNumbers([nN(0.01, 0.001), nN(0.01, 0.01), nN(0.01, 0.05)])
-table["nH"] = giveFormatToArrayNumbers([nH(0.01, 0.001), nH(0.01, 0.01), nH(0.01, 0.05)])
+table["nC"] = [nC(0.01, 0.001), nC(0.01, 0.01), nC(0.01, 0.05)]
+table["nN"] = [nN(0.01, 0.001), nN(0.01, 0.01), nN(0.01, 0.05)]
+table["nH"] = [nH(0.01, 0.001), nH(0.01, 0.01), nH(0.01, 0.05)]
 
+nC = table["nC"]
+nN = table["nN"]
+nH = table["nH"]
 
+table["nC"] = giveFormatToArrayNumbers(table["nC"])
+table["nN"] = giveFormatToArrayNumbers(table["nN"])
+table["nH"] = giveFormatToArrayNumbers(table["nH"])
 
 print (table)
 
-# crear tabla ejercicio 2
-# open("output.html","w", encoding="utf-8").write("<table> <tr> <th> </th> <th> nC </th> <th> nN </th> <th> nH </th> </tr> <tr> <td> ϵ = 0.01, δ = 0.001 </td> <td> " + str(table["nC"][0]) + "</td> <td> " + str(table["nN"][0]) + "</td> <td> " + str(table["nH"][0]) + "</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.01 </td> <td> " + str(table["nC"][1]) + "</td> <td> " + str(table["nN"][1]) + "</td> <td> " + str(table["nH"][1]) + "</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.05 </td> <td> " + str(table["nC"][2]) + "</td> <td> " + str(table["nN"][2]) + "</td> <td> " + str(table["nH"][2]) + "</td> </tr> </table>")
+#encode on utf-8
+if generar_tablas_y_gráfica:
+    open("output.html","w", encoding="utf-8").write("<table> <tr> <th> </th> <th> nC </th> <th> nN </th> <th> nH </th> </tr> <tr> <td> ϵ = 0.01, δ = 0.001 </td> <td> " + str(table["nC"][0]) + "</td> <td> " + str(table["nN"][0]) + "</td> <td> " + str(table["nH"][0]) + "</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.01 </td> <td> " + str(table["nC"][1]) + "</td> <td> " + str(table["nN"][1]) + "</td> <td> " + str(table["nH"][1]) + "</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.05 </td> <td> " + str(table["nC"][2]) + "</td> <td> " + str(table["nN"][2]) + "</td> <td> " + str(table["nH"][2]) + "</td> </tr> </table>")
 
-# # crear el grafico
-# n_groups = 3
-# nC = table["nC"]
-# nN = table["nN"]
-# nH = table["nH"]
-# fig, ax = plt.subplots()
-# index = np.arange(n_groups)
-# bar_width = 0.20
-# opacity = 0.9
+    #generate a graph with the results of the table
 
-# rects1 = plt.bar(index, nC, bar_width,alpha=opacity,color='g',label='nC')
+    # data to plot
+    n_groups = 3
 
-# rects2 = plt.bar(index + bar_width, nN, bar_width,alpha=opacity,color='b',label='nN')
+    # create plot
+    fig, ax = plt.subplots()
+    index = np.arange(n_groups)
+    bar_width = 0.20
+    opacity = 0.9
 
-# rects3 = plt.bar(index + bar_width*2, nH, bar_width,alpha=opacity,color='r',label='nH')
+    rects1 = plt.bar(index, nC, bar_width,alpha=opacity,color='g',label='nC')
 
-# plt.xlabel('δ')
-# plt.ylabel('n')
-# plt.title('nC, nN, nH')
-# plt.xticks(index + bar_width, ('0.001', '0.01', '0.05'))
-# plt.legend()
-# plt.tight_layout()
-# plt.show()
-# #save the graph
-# fig.savefig("output.png")
+    rects2 = plt.bar(index + bar_width, nN, bar_width,alpha=opacity,color='b',label='nN')
+
+    rects3 = plt.bar(index + bar_width*2, nH, bar_width,alpha=opacity,color='r',label='nH')
+
+    plt.xlabel('δ')
+    plt.ylabel('n')
+    plt.title('nC, nN, nH')
+    plt.xticks(index + bar_width, ('0.001', '0.01', '0.05'))
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+    #save the graph
+    fig.savefig("output.png")
 
 
 
