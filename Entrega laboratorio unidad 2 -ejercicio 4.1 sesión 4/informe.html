@@ -1,0 +1,223 @@
+<!--
+PAUTAS sobre cómo ENTREGAR los EJERCICIOS realizados
+Algunos ejercicios se realizarán de forma individual; para otros se requerirá trabajar en grupos de 2
+estudiantes.
+Cada ejercicio debe ser entregado mediante un breve pero claro informe (en formato .pdf, .ps, o
+.html) indicando:
+I. La identificación del ejercicio (nro. de sesión, nro. de ejercicio si corresponde).
+II. Nro de grupo asignado, Nombres completos y CI de sus integrantes.
+III. La descripción del problema (texto del ejercicio).
+IV. Una breve descripción de la solución (seudocódigo, y descripción de técnicas avanzadas si
+las hubiera). Lenguaje de implementación y bibliotecas empleadas (adjuntar el código
+fuente).
+V. En caso de pedirse resultados computacionales, se debe reportar: 0) la plataforma de
+cómputo utilizada (computadora – modelo, procesador, memoria, sistema operativo) 1) las
+semillas empleadas; 2) los tamaños de muestra, y tiempos de cálculo; 3) todos los valores de
+parámetros de entrada, tanto del problema como de configuración de las técnicas si los
+hubiera; 4) los resultados numéricos incluyendo estimaciones puntuales, varianzas o
+desviaciones estándar, e intervalos de confianza (con al menos 4 cifras significativas).
+VI. Se adjuntará también un anexo con el log de las ejecuciones (identificando sus respectivos
+parametros) y de las salidas de los programas (tanto si es en pantalla como en archivos).
+ El informe se subirá en el lugar de entrega de la plataforma EVA de cada Unidad. Bajo ningún
+concepto podrá ser publicado en las news del curso 2010, ni en los foros del curso.
+-->
+
+<!--
+Entrega 2 - Ejercicio 4.1 (individual):
+1. Comparar y discutir la dependencia de los criterios de peor caso nC,
+nN, nH frente a los par´ametros ϵ y δ.
+2. Calcular nC, nN, nH para ϵ = 0.01, δ = 0.001, 0.01, 0.05.
+Fecha entrega: ver el calendario en el EVA.
+
+
+-->
+
+<doctype html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<title>Ejercicio 4.1</title>
+
+<style type="text/css">
+
+/* Set font family and size for the entire document */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Style headings */
+h1 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+/* Add padding to paragraphs */
+p {
+  padding-bottom: 10px;
+}
+
+/* Style span snippets */
+span {
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  font-size: 90%;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+
+/* Style tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+/* Add a gray background color to the page */
+body {
+  background-color: #f5f5f5;
+}
+
+/* Add a box shadow to the main content area */
+main {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #ddd;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Ejercicio 4.1</h1>
+
+<h2> Grupo: N/A</h2>
+
+<h2> Integrantes: </h2>
+<ul>
+<li>Nombre: Gabriel Kryger</li>
+<li>CI: 4933558-9</li>
+</ul>
+
+<h2> Descripción del problema </h2>
+
+<ul> 
+  <li>Parte 1: Comparar y discutir la dependencia de los criterios de peor caso nC, nN, nH frente a los parámetros ϵ y δ.</li>
+  <li> Parte 2: Calcular nC, nN, nH para ϵ = 0.01, δ = 0.001, 0.01, 0.05. </li>
+</ul>
+
+<h2> Descripción de la solución </h2>
+<h3> Parte 1</h3>
+<p>
+  Para la parte 1 del ejercicio se siguió el siguiente procedimiento:
+  <ul> 
+    <li>
+      1)Se implementaron los algoritmos en Python para tener un mayor conocimiento y control sobre el problema
+    </li>
+    <li>
+      2)Se analizaron las ecuaciones y se crearon teorías sobre el comportamiento de las funciones dependiendo de los parámetros ϵ y δ
+    </li>
+    <li>
+      3)Se realizaron experimentos con los algoritmos para comprobar las teorías y obtener resultados numéricos
+  </ul>
+</p>
+
+<p>
+  Las ecuaciones que se utilizaron para la parte 1 del ejercicio son las siguientes:
+
+    <img src="https://latex.codecogs.com/gif.latex?nC(\epsilon,&space;\delta)&space;=&space;\left\lceil&space;\frac{1}{4\delta\epsilon^2}&space;\right\rceil" title="nC(\epsilon, \delta) = \left\lceil \frac{1}{4\delta\epsilon^2} \right\rceil" />
+
+    <img src="https://latex.codecogs.com/gif.latex?nN(\epsilon,&space;\delta)&space;=&space;\left\lceil (\frac{\Phi^{-1}(1-\frac{\delta}{2})}{2\epsilon})^2 \right\rceil" title="nN(\epsilon, \delta) = \left\lceil (\frac{\Phi^{-1}(1-\frac{\delta}{2})}{2\epsilon})^2 \right\rceil" />
+
+    <img src="https://latex.codecogs.com/gif.latex?nH(\epsilon,&space;\delta)&space;=&space;\left\lceil&space;\frac{2\ln(2/\delta)}{4\epsilon^2}&space;\right\rceil" title="nH(\epsilon, \delta) = \left\lceil \frac{2\ln(2/\delta)}{4\epsilon^2} \right\rceil" />
+  
+    <p>Encontradas en las páginas 13, 15 y 18 del <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf" >material de la unidad 2 sesión 4</a></p>
+</p>
+
+<p>
+  La teoría que se utilizó para la parte 1 del ejercicio es la siguiente:
+  <ul>
+    <li>
+      <strong>nC es la cota superior de todas las funciones</strong><br> Es decir, nC > nN y nC > nH. <br>(página 13 del <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf"> material de la unidad 2 sesión 4 </a>).
+    </li>
+    <li>
+      <strong>nN es la cota inferior de todas las funciones</strong><br>es decir, nN < nC y nN < nH. <br>(página 16 del <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf"> material de la unidad 2 sesión 4 </a>). <br>
+      Notar que este caso tiene muchas hipotesis que no tienen por que cuplirse para todos los casos y por lo tanto no es segura <br>(página 15 y 16 del <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf"> material de la unidad 2 sesión 4 </a>).
+    </li>
+    <li>
+      <strong>nH es el caso intermedio</strong><br>Notar que para que la hipotesis del teorico se cumpla se debe cumplir que 1/2 ≤ µ < 1. <br>(página 18 del <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf"> material de la unidad 2 sesión 4 </a>).
+    </li>
+  </ul>
+
+</p>
+
+<p>
+  Los resultados de los experimentos se muestran en la siguiente tabla:
+</p>
+<table> nC <tr> <td></td> <td> δ=0.5</td> <td> δ=0.05</td> <td> δ=0.005</td> </tr> <tr> <td> ϵ=0.05</td> <td> 200</td> <td> 2,000</td> <td> 20,000</td> </tr> <tr> <td> ϵ=0.01</td> <td> 5,000</td> <td> 50,000</td> <td> 500,000</td> </tr> <tr> <td> ϵ=0.001</td> <td> 500,000</td> <td> 5,000,000</td> <td> 50,000,000</td> </tr> </table> <table> nN <tr> <td></td> <td> δ=0.5</td> <td> δ=0.05</td> <td> δ=0.005</td> </tr> <tr> <td> ϵ=0.05</td> <td> 46</td> <td> 385</td> <td> 788</td> </tr> <tr> <td> ϵ=0.01</td> <td> 1,138</td> <td> 9,604</td> <td> 19,699</td> </tr> <tr> <td> ϵ=0.001</td> <td> 113,735</td> <td> 960,365</td> <td> 1,969,860</td> </tr> </table> <table> nH <tr> <td></td> <td> δ=0.5</td> <td> δ=0.05</td> <td> δ=0.005</td> </tr> <tr> <td> ϵ=0.05</td> <td> 278</td> <td> 738</td> <td> 1,199</td> </tr> <tr> <td> ϵ=0.01</td> <td> 6,932</td> <td> 18,445</td> <td> 29,958</td> </tr> <tr> <td> ϵ =0.001</td> <td> 693,148</td> <td> 1,844,440</td> <td> 2,995,733</td> </tr> </table>
+
+<p>
+  Se puede ver experimentalmente que  nC > nH > nN <br>
+</p>
+
+<p>
+  en cuanto a la dependencia de nC, nN y nH con respecto a ϵ y δ, se puede ver que:
+  <ul>
+    <li>
+      Todas son inversamente proporcionales a ϵ y δ. <br>
+      Es decir que a mayor ϵ y δ, menor nC, nN y nH.
+    </li>
+    <li>
+      nN tiene de hipotesis que ϵ -> 0, por lo que en el caso de tomar un ϵ muy grande, no se puede garantizar que nN sea valida, por lo cual en esos casos se debería de optar por nC o nH. <a href="https://eva.fing.edu.uy/pluginfile.php/19569/mod_resource/content/9/Unidad2-Sesion04.pdf"> (página 16 del material de la unidad 2 sesión 4) </a>
+    </li>
+    <li>
+      
+    </li>
+  </ul>
+</p>
+
+<h3>
+  Parte 2
+</h3>
+
+<p>
+  Para la parte 2 se tomó lo implementado en la parte  y se le pasaron los valores solicitados para ϵ y δ.
+</p>
+
+<p>
+  Los resultados de los experimentos se muestran en la siguiente tabla:
+</p>
+
+<table> <tr> <th> </th> <th> nC </th> <th> nN </th> <th> nH </th> </tr> <tr> <td> ϵ = 0.01, δ = 0.001 </td> <td> 2,500,000</td> <td> 27,069</td> <td> 38,005</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.01 </td> <td> 250,000</td> <td> 16,588</td> <td> 26,492</td> </tr> <tr> <td> ϵ = 0.01, δ = 0.05 </td> <td> 50,000</td> <td> 9,604</td> <td> 18,445</td> </tr> </table>
+
+<p>
+  Los resultados de los experimentos se muestran en la siguiente gráfica:
+</p>
+
+<img src="./output.png" alt="Grafica" width="500" height="500">
+
+</body>
+</html>

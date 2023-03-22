@@ -168,7 +168,20 @@ main {
 
 <p> 
  Para calcular el área de la región R se utilizó el método de Monte Carlo, el cual consiste en generar n puntos aleatorios en el espacio de dimensión 6, y calcular la proporción de puntos que se encuentran dentro de la región R.
+ es decir:
 </p>
+<span>
+  <pre>
+    <code>
+      <!-- estimado = (cantidad_de_puntos_dentro_de_R / tamaño_de_muestra) -->
+      estimado = (Σ<sup>n</sup><sub>i=1</sub>x<sub>i</sub>) / n
+    </code>
+  </pre>
+</span>
+<p>
+  Donde <ul><li>estimado es la estimación del área de la región R</li><li>n es el tamaño de la muestra</li><li>x<sub>i</sub> es 1 si está dentro de el volumen, y 0 si está fuera del volumen.</li></ul>
+</p>
+
 <p>
   Para calcular el error de la estimación se utilizó la desviación estándar de la muestra, la cual se calcula como:
 </p>
@@ -176,22 +189,21 @@ main {
 <span>
   <pre>
     <code>
-      σ = sqrt(1/(n-1) * Σ<sub>n</sub><sup>i=1</sup>(x<sub>i</sub> - x)<sup>2</sup>)
+      σ = math.sqrt(estimado * (1 - estimado) / (n - 1))
     </code>
   </pre>
 </span>
 
-<p>
-  Donde x<sub>i</sub> es la i-ésima estimación del área de la región R, y x es el promedio de las estimaciones.
-  <br>
+<p> 
+  Donde <ul><li>σ es la desviación estándar</li><li>n es el tamaño de la muestra</li><li>estimado es la estimación del área de la región R</li></ul>
 </p>
-
+<p><strong>Nota: </strong> el pseudocódigo del algoritmo original se puede encontral en la página 14 del documento <a href="https://eva.fing.edu.uy/pluginfile.php/19567/mod_resource/content/9/Unidad2-Sesion03.pdf">Unidad2-Sesion03.pdf</a></p>
 
 <table>Ejercicio A<tr><td></td> <td>Estimado</td><td>Desviación estándar</td><td>Tiempo de ejecución</td></tr><tr><td>A1</td><td>0.0001</td><td>0.0001</td><td>0.05097031593322754</td></tr><tr><td>A2</td><td>0.000278</td><td>1.667102258180325e-05</td><td>2.8903517723083496</td></tr></table>
 <p>
   <strong>Son los valores consistentes:</strong>
   <br>
-  En este caso los valores sí son consistentes ya que: <ul><li>La diferencia entre el valor estimado en A1 y el valor estimado en A2 es de 0.000178</li><li>La desviación estándar de el experimento A1 es de 0.0001</li></ul>
+  En este caso los valores sí son consistentes, ya que: <ul><li>La diferencia entre el valor estimado en A1 y el valor estimado en A2 es de 0.000178</li><li>La desviación estándar del experimento A1 es de 0.0001</li></ul>
   Por lo tanto, el valor estimado en A2 entra dentro de 2 desviaciones del experimento A1 lo cual es raro, pero no algo imposible.
 </p>
 
@@ -215,7 +227,7 @@ main {
     <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
     <li>4 GB de RAM</li>
     <li>Sistema operativo: Windows 10</li>
-    <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y por lo tanto continuando con la secuencia del random).</li>
+    <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y, por lo tanto, continuando con la secuencia del random).</li>
   </ul>
 </p>
 

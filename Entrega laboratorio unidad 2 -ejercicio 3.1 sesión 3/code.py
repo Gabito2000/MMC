@@ -59,7 +59,7 @@ c5 = 0.5
 c6 = 0.45
 r = 0.35
 
-generar_tabla = True
+generar_tabla = False
 
 def calculateVolume(tamaño_de_muesta, tiene_restricciones):
     estimado = 0
