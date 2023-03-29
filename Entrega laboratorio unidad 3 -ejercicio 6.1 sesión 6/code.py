@@ -35,19 +35,9 @@ random.seed(1402)
 
 print_tables = True
 
-def  Agresti_Coull(delta, estimado, n):
-    def k(delta):
-        return stats.norm.ppf(1 - (delta/2))
-    S = estimado * n
-    p = estimado
-    q = 1-p
-    x_mono = S + ((k(delta)**2) /2)
-    n_mono = n + (k(delta)**2)
-    p_mono = x_mono/n_mono
-    q_mono = 1-p_mono
-    CI_i = p - k(delta) * ((p_mono*q_mono)**0.5  ) * n_mono**(-1/2)
-    CI_f = p + k(delta) * ((p_mono*q_mono)**0.5  ) * n_mono**(-1/2) 
-
+def  Calculo_intervalo_de_confianza(delta, estimado, n, varianza):
+    CI_i = estimado - stats.norm.ppf(1 - delta/2) * math.sqrt(varianza/n)
+    CI_f = estimado + stats.norm.ppf(1 - delta/2) * math.sqrt(varianza/n)
     return [CI_i, CI_f]
 
 
@@ -70,12 +60,12 @@ def IntegracionMonteCarlo(funcion, n, nivel_confianza):
     estimacion_varianza_integral = estimacion_varianza / n
     
     # Calcular intervalo de confianza
-    intervalo_confianza = Agresti_Coull(1 - nivel_confianza, estimacion_integral, n)
+    intervalo_confianza = Calculo_intervalo_de_confianza(1 - nivel_confianza, estimacion_integral, n, estimacion_varianza)
     return estimacion_integral, estimacion_varianza_integral, intervalo_confianza , estimacion_varianza, time.time() - tiempo_inicial
 
 def f(x, y):
     # Si se sale del círculo, la altura es 0
-    if  ((x-0.5)**2 + (y-0.5))**2 > 0.4:
+    if  ((x-0.5)**2 + (y-0.5))**2 > (0.4)**2:
         return 0
     return 8 - (8/0.4 * math.sqrt((x - 0.5)**2 + (y - 0.5)**2))
 

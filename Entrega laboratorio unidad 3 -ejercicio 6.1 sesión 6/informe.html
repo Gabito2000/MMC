@@ -156,7 +156,9 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
 
     <h2> Descripción del problema </h2>
     <p> 
-      se idealiza una montaña como un cono inscrito en una región cuadrada de lado 1 km. La base de la montaña es circular, con centro en (0.5, 0.5) y radio r = 0.4km, y la altura es H = 8km. La altura de cada punto (x, y) de la montaña está dada por la función f(x, y) = H − H/r × p (x − 0.5)2 + (y − 0.5)2, en la zona definida por el círculo, y 0 fuera del círculo. El volumen total de la montaña (en km cúbicos) puede verse como la integral de la función altura en la región.
+      se idealiza una montaña como un cono inscrito en una región cuadrada de lado 1 km. La base de la montaña es circular, con centro en (0.5, 0.5) y radio r = 0.4km, y la altura es H = 8km. La altura de cada punto (x, y) de la montaña está dada por la función 
+      <img src="https://latex.codecogs.com/gif.latex?f(x,&space;y)&space;=&space;H&space;-&space;H/r&space;\times&space;\sqrt{(x&space;-&space;0.5)^2&space;&plus;&space;(y&space;-&space;0.5)^2}" title="f(x, y) = H - H/r \times \sqrt{(x - 0.5)^2 + (y - 0.5)^2}" />
+      , en la zona definida por el círculo, y 0 fuera del círculo. El volumen total de la montaña (en km cúbicos) puede verse como la integral de la función altura en la región.
       <ul>
         <li>Parte a: escribir un programa para calcular el volumen por Monte Carlo. Realizar 10^6 replicaciones y estimar el valor de ζ y el error cometido (con nivel de confianza 0.95), utilizando como criterio la aproximación normal.</li>
         <li>Parte b: en base al valor estimado en la parte a, calcular el número de 20 replicaciones necesario para obtener un error absoluto menor a 10−3 (con nivel de confianza 0.95).</li>
@@ -168,41 +170,52 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
     <h2> Descripción de la solución </h2>
     <h3> Parte a</h3>
     <p> Para la implementación de el cálculo del volumen de la montaña por medio de Monte Carlo se utilizó una implementación en python del pseudocódigo proporcionado en la página 9 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
-    <p> Para el cálculo de intervalo de confianza se utiliza <a link="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval" >Agresti Coull</a>, el cual se calcula como: </p>
-    <img title="\left[ \hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p} (1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p} (1-\hat{p})}{n}} \right]" src="https://latex.codecogs.com/gif.latex?\left[&space;\hat{p}&space;-&space;z_{\alpha/2}&space;\sqrt{\frac{\hat{p}&space;(1-\hat{p})}{n}},&space;\hat{p}&space;&plus;&space;z_{\alpha/2}&space;\sqrt{\frac{\hat{p}&space;(1-\hat{p})}{n}}&space;\right]" />
-    <p> Donde: </p>
+    <p> El código se encuentra en el archivo <a href="./code.py"> code.py </a> con el nombre IntegracionMonteCarlo.</p>
+    <p> La formula de la altura queda como:</p>
     <ul>
-      <li> <img src="https://latex.codecogs.com/gif.latex?%5Chat%7Bp%7D" title="\hat{p}" /> es la estimación del parámetro de interés </li>
-      <li> <img src="https://latex.codecogs.com/gif.latex?z_%7B%5Calpha%2F2%7D" title="z_{\alpha/2}" /> es el valor de la distribución normal estándar que corresponde al nivel de confianza </li>
-      <li> <img src="https://latex.codecogs.com/gif.latex?n" title="n" /> es el número de muestras </li>
-    <table>
-      <tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th></tr>
-      <tr><td>0.4197975837623529</td><td>7.6632896698802035</td><td>7.663289669880204e-06</td><td>[0.41883029301230834, 0.4207648745123974]</td><td>2.106435775756836</td></tr>
-    </table>
+      <li>
+      Si (x-0.5)^2 + (y-0.5)^2 <= 0.4 <br>
+      <img title="f(x, y) = 8 - 8/r \times \sqrt{(x - 0.5)^2 + (y - 0.5)^2}" src="https://latex.codecogs.com/gif.latex?f(x,&space;y)&space;=&space;8&space;-&space;8/0.4&space;\times&space;\sqrt{(x&space;-&space;0.5)^2&space;&plus;&space;(y&space;-&space;0.5)^2}" />
+      </li>
+      <li>
+      Si no <br>
+      <img title="f(x, y) = 0" src="https://latex.codecogs.com/gif.latex?f(x,&space;y)&space;=&space;0" />
+      </li>
+    </ul>
+    <p> Para el cálculo de intervalo de confianza se utiliza la formula dada en la página 12 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
+    <img src="https://latex.codecogs.com/gif.latex?[\bar{\zeta}_n&space;-&space;\Phi^{-1}(1&space;-&space;\frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}},\bar{\zeta}_n&space;&plus;&space;\Phi^{-1}(1&space;-&space;\frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}}]" title="\bar{\zeta}_n - \Phi^{-1}(1 - \frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}},\bar{\zeta}_n + \Phi^{-1}(1 - \frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}}" />
+    <p> Donde:</p>
+    <ul>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\bar{\zeta}_n" title="\bar{\zeta}_n" /> es la estimación del volumen de la montaña.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}^2_n" title="\hat{\sigma}^2_n" /> es la varianza del estimador.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}(1&space;-&space;\frac{\delta}{2})" title="\Phi^{-1}(1 - \frac{\delta}{2})" /> es el valor de la función inversa de la distribución normal estándar para el nivel de confianza 0.95.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?n" title="n" /> es el número de muestras.</li>
+    </ul>
+
+    <p> El resultado de la ejecución del código es el siguiente: </p>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>0.4197975837623529</td><td>7.6632896698802035</td><td>7.663289669880204e-06</td><td>[0.4143718845725806, 0.42522328295212514]</td><td>2.1410608291625977</td></tr></table>
 
     <h3> Parte b</h3>
     <p> Para la implementación de el cálculo del número de muestras necesarias para obtener un error absoluto menor a 10^−3 (con nivel de confianza 0.95) se utilizó la formula proporcionada en el item 2 de la página 14 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
       <!-- math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2) -->
     </p> 
-    <img src="https://latex.codecogs.com/gif.latex?\large&space;\lceil&space;\left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2&space;\cdot&space;\sigma^2&space;\cdot&space;\frac{1}{\epsilon^2}&space;\rceil" title="\large \lceil \left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2 \cdot \sigma^2 \cdot \frac{1}{\epsilon^2} \rceil" />
+    <img src="https://latex.codecogs.com/gif.latex?\large&space;\lceil&space;\left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2&space;\cdot&space;\sigma^2_n&space;\cdot&space;\frac{1}{\epsilon^2}&space;\rceil" title="\large \lceil \left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2 \cdot \sigma^2_n \cdot \frac{1}{\epsilon^2} \rceil" />
     <p>
       Donde: <br>
       <ul>
         <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}" title="\Phi^{-1}" /> es la función inversa de la distribución normal estándar </li>
         <li> <img src="https://latex.codecogs.com/gif.latex?\delta" title="\delta" /> es el nivel de confianza </li>
-        <li> <img src="https://latex.codecogs.com/gif.latex?\sigma^2" title="\sigma^2" /> es la varianza del estimador </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\sigma^2_n" title="\sigma^2_n" /> es la varianza del estimador </li>
         <li> <img src="https://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /> es el error absoluto </li>
       </ul>
     </p>
     <p>
-      El resultado de la formula es:  29.438.212
+      El resultado de la formula es: 29.438.212
     </p>
     <h3> Parte c</h3>
-    <p> Para la implementación de el cálculo del volumen de la montaña por medio de Monte Carlo se utilizó una implementación en python del pseudocódigo proporcionado en la página 9 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
-    <table>
-      <tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr>
-      <tr><td>0.42313589361483644</td><td>7.674766575732402</td><td>2.607076331854802e-07</td><td>[0.4229574220457535, 0.4233143651839194]</td><td>65.07188081741333</td></tr>
-    </table>
+    <p> Para la implementación de el cálculo del volumen de la montaña por medio de Monte Carlo se utilizó una implementación en python del pseudocódigo proporcionado en la página 9 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso y el resultado de la parte b como número de muestras. </p>
+    <p> El resultado de la ejecución del código es el siguiente: </p>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>0.42313589361483644</td><td>7.674766575732402</td><td>2.607076331854802e-07</td><td>[0.42213514507643, 0.42413664215324287]</td><td>64.78593349456787</td></tr></table>
 
 
     <p>
