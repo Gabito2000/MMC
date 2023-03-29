@@ -188,13 +188,13 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
     <ul>
       <li> <img src="https://latex.codecogs.com/gif.latex?\bar{\zeta}_n" title="\bar{\zeta}_n" /> es la estimación del volumen de la montaña.</li>
       <li> <img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}^2_n" title="\hat{\sigma}^2_n" /> es la varianza del estimador.</li>
-      <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}(1&space;-&space;\frac{\delta}{2})" title="\Phi^{-1}(1 - \frac{\delta}{2})" /> es el valor de la función inversa de la distribución normal estándar para el nivel de confianza 0.95.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}" title="\Phi^{-1}" /> es el valor de la función inversa de la distribución normal.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\delta" title="\delta" /> es el nivel de confianza.</li>
       <li> <img src="https://latex.codecogs.com/gif.latex?n" title="n" /> es el número de muestras.</li>
     </ul>
 
     <p> El resultado de la ejecución del código es el siguiente: </p>
-    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>0.4197975837623529</td><td>7.6632896698802035</td><td>7.663289669880204e-06</td><td>[0.4143718845725806, 0.42522328295212514]</td><td>2.1410608291625977</td></tr></table>
-
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3371610906796791</td><td>3.5574755592356313</td><td>3.5574755592356312e-06</td><td>[1.333464349430088, 1.3408578319292703]</td><td>4.47283673286438</td></tr></table>
     <h3> Parte b</h3>
     <p> Para la implementación de el cálculo del número de muestras necesarias para obtener un error absoluto menor a 10^−3 (con nivel de confianza 0.95) se utilizó la formula proporcionada en el item 2 de la página 14 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
       <!-- math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2) -->
@@ -210,13 +210,12 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
       </ul>
     </p>
     <p>
-      El resultado de la formula es: 29.438.212
+      El resultado de la formula es: 13.665.896
     </p>
     <h3> Parte c</h3>
     <p> Para la implementación de el cálculo del volumen de la montaña por medio de Monte Carlo se utilizó una implementación en python del pseudocódigo proporcionado en la página 9 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso y el resultado de la parte b como número de muestras. </p>
     <p> El resultado de la ejecución del código es el siguiente: </p>
-    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>0.42313589361483644</td><td>7.674766575732402</td><td>2.607076331854802e-07</td><td>[0.42213514507643, 0.42413664215324287]</td><td>64.78593349456787</td></tr></table>
-
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3399899305240963</td><td>3.5646348527679046</td><td>2.6084164937066e-07</td><td>[1.3389889248024447, 1.340990936245748]</td><td>70.68711805343628</td></tr></table>
 
     <p>
       Entorno de ejecución:
