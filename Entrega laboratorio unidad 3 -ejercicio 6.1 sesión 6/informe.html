@@ -72,7 +72,7 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
     
     <meta charset="utf-8">
     
-    <title>Ejercicio 4.1</title>
+    <title>Ejercicio 6.1</title>
     
     <style type="text/css">
     
@@ -168,6 +168,13 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
     <h2> Descripción de la solución </h2>
     <h3> Parte a</h3>
     <p> Para la implementación de el cálculo del volumen de la montaña por medio de Monte Carlo se utilizó una implementación en python del pseudocódigo proporcionado en la página 9 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
+    <p> Para el cálculo de intervalo de confianza se utiliza <a link="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval" >Agresti Coull</a>, el cual se calcula como: </p>
+    <img title="\left[ \hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p} (1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p} (1-\hat{p})}{n}} \right]" src="https://latex.codecogs.com/gif.latex?\left[&space;\hat{p}&space;-&space;z_{\alpha/2}&space;\sqrt{\frac{\hat{p}&space;(1-\hat{p})}{n}},&space;\hat{p}&space;&plus;&space;z_{\alpha/2}&space;\sqrt{\frac{\hat{p}&space;(1-\hat{p})}{n}}&space;\right]" />
+    <p> Donde: </p>
+    <ul>
+      <li> <img src="https://latex.codecogs.com/gif.latex?%5Chat%7Bp%7D" title="\hat{p}" /> es la estimación del parámetro de interés </li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?z_%7B%5Calpha%2F2%7D" title="z_{\alpha/2}" /> es el valor de la distribución normal estándar que corresponde al nivel de confianza </li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?n" title="n" /> es el número de muestras </li>
     <table>
       <tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th></tr>
       <tr><td>0.4197975837623529</td><td>7.6632896698802035</td><td>7.663289669880204e-06</td><td>[0.41883029301230834, 0.4207648745123974]</td><td>2.106435775756836</td></tr>
@@ -181,9 +188,10 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
     <p>
       Donde: <br>
       <ul>
-        <li>delta = (1-0.95)</li>
-        <li>epsilon = 10^−3</li>
-        <li>estimacion = 0.4197975837623529</li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}" title="\Phi^{-1}" /> es la función inversa de la distribución normal estándar </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\delta" title="\delta" /> es el nivel de confianza </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\sigma^2" title="\sigma^2" /> es la varianza del estimador </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /> es el error absoluto </li>
       </ul>
     </p>
     <p>
@@ -195,7 +203,7 @@ Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
       <tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr>
       <tr><td>0.42313589361483644</td><td>7.674766575732402</td><td>2.607076331854802e-07</td><td>[0.4229574220457535, 0.4233143651839194]</td><td>65.07188081741333</td></tr>
     </table>
-    
+
 
     <p>
       Entorno de ejecución:
