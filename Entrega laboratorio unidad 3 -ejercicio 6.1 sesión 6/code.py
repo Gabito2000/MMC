@@ -28,12 +28,34 @@
 
 import random
 import math
+import scipy.stats as stats
+import time
+
+random.seed(1402)
+
+print_tables = True
+
+def  Agresti_Coull(delta, estimado, n):
+    def k(delta):
+        return stats.norm.ppf(1 - (delta/2))
+    S = estimado * n
+    p = estimado
+    q = 1-p
+    x_mono = S + ((k(delta)**2) /2)
+    n_mono = n + (k(delta)**2)
+    p_mono = x_mono/n_mono
+    q_mono = 1-p_mono
+    CI_i = p - k(delta) * ((p_mono*q_mono)**0.5  ) * n_mono**(-1/2)
+    CI_f = p + k(delta) * ((p_mono*q_mono)**0.5  ) * n_mono**(-1/2) 
+
+    return [CI_i, CI_f]
+
 
 def IntegracionMonteCarlo(funcion, n, nivel_confianza):
+    tiempo_inicial = time.time()
     # Inicializar variables
     S = 0
     T = 0
-    
     # Generar valores aleatorios y acumular términos
     for j in range(1, n+1):
         x_al = random.uniform(0, 1) # Intervalo de integración [0,1]
@@ -48,43 +70,60 @@ def IntegracionMonteCarlo(funcion, n, nivel_confianza):
     estimacion_varianza_integral = estimacion_varianza / n
     
     # Calcular intervalo de confianza
-    raiz_varianza = math.sqrt(estimacion_varianza_integral)
-    raiz_delta = math.sqrt(nivel_confianza / (2 * (n - 1)))
-    limite_inferior = estimacion_integral - raiz_varianza * raiz_delta
-    limite_superior = estimacion_integral + raiz_varianza * raiz_delta
-    intervalo_confianza = [limite_inferior, limite_superior]
-
-    return estimacion_integral, estimacion_varianza_integral, intervalo_confianza
+    intervalo_confianza = Agresti_Coull(1 - nivel_confianza, estimacion_integral, n)
+    return estimacion_integral, estimacion_varianza_integral, intervalo_confianza , estimacion_varianza, time.time() - tiempo_inicial
 
 def f(x, y):
-    return 8 - 8/0.4 * math.sqrt((x - 0.5)**2 + (y - 0.5)**2)* (((x-0.5)**2 + (y-0.5))**2 <= 0.4**2)
+    # Si se sale del círculo, la altura es 0
+    if  ((x-0.5)**2 + (y-0.5))**2 > 0.4:
+        return 0
+    return 8 - (8/0.4 * math.sqrt((x - 0.5)**2 + (y - 0.5)**2))
 
+
+def generate_html_table(estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion):
+    tabla_html = "<table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr>"
+    tabla_html += "<tr><td>" + str(estimacion_integral) + "</td><td>" + str(estimacion_varianza) + "</td><td>" + str(estimacion_varianza_integral) + "</td><td>" + str(intervalo_confianza) + "</td><td>" + str(tiempo_ejecucion) + "</td></tr>"
+    tabla_html += "</table>"
+    return tabla_html
 
 # Parte a
 n = 10**6
 nivel_confianza = 0.95
-estimacion_integral, estimacion_varianza, intervalo_confianza = IntegracionMonteCarlo(f, n, nivel_confianza)
+
+estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion = IntegracionMonteCarlo(f, n, nivel_confianza)
+
 print("Parte a")
 print("Estimación integral: ", estimacion_integral)
 print("Estimación varianza: ", estimacion_varianza)
+print("Estimación varianza integral: ", estimacion_varianza_integral)
 print("Intervalo de confianza: ", intervalo_confianza)
+print("Tiempo de ejecución: ", tiempo_ejecucion)
+
+if print_tables:
+    print(generate_html_table(estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion))
 
 # Parte b
-def nH(epsilon, delta):
-    return math.ceil(2*math.log(2/delta)/(4*epsilon**2))
+# se podría usar nN también
+def nN(epsilon, delta):
+    return math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2)
 
 error = 10**(-3)
 nivel_confianza = 0.95
 delta = 1 - nivel_confianza
-n = nH(error, delta)
+n = nN(error, delta)
+
 print("Parte b")
 print("Número de muestras: ", n)
 
 # Parte c
-n = n
 nivel_confianza = 0.95
-estimacion_integral, estimacion_varianza, intervalo_confianza = IntegracionMonteCarlo(f, n, nivel_confianza)
+estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion = IntegracionMonteCarlo(f, n, nivel_confianza)
 print("Parte c")
 print("Estimación integral: ", estimacion_integral)
 print("Estimación varianza: ", estimacion_varianza)
+print("Estimación varianza integral: ", estimacion_varianza_integral)
 print("Intervalo de confianza: ", intervalo_confianza)
+print("Tiempo de ejecución: ", tiempo_ejecucion)
+
+if print_tables:
+    print(generate_html_table(estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion))
