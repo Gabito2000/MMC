@@ -54,6 +54,15 @@ def IntegracionMonteCarlo(funcion, n, nivel_confianza):
             T = T + (1 - 1/j) * (funcion(x_al,y_al) - S/ (j-1))**2
         S = S + funcion(x_al,y_al)
     
+    # for j in range(1, n+1):
+    #     x1 = random.uniform(0, 1)
+    #     x2 = random.uniform(0, 1)
+        
+    #     if (x1 - 0.5)**2 + (x2 - 0.5)**2 <= 0.4**2:
+    #         if j > 1:
+    #             T = T + (1-1/j) * (f(x1,x2)-S/(j-1) )**2 
+    #             S = S + f(x1,x2)
+
     # Calcular estimación puntual de la integral y la varianza
     estimacion_integral = S / n
     estimacion_varianza = T / (n - 1)
@@ -65,9 +74,10 @@ def IntegracionMonteCarlo(funcion, n, nivel_confianza):
 
 def f(x, y):
     # Si se sale del círculo, la altura es 0
-    if  ((x-0.5)**2 + (y-0.5))**2 > (0.4)**2:
+    if  ((x-0.5)**2 + (y-0.5)**2 )> (0.4)**2:
         return 0
     return 8 - (8/0.4 * math.sqrt((x - 0.5)**2 + (y - 0.5)**2))
+    
 
 
 def generate_html_table(estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion):
