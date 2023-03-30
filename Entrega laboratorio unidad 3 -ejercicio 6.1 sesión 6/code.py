@@ -33,7 +33,7 @@ import time
 
 random.seed(1402)
 
-print_tables = True
+print_tables = False
 
 def  Calculo_intervalo_de_confianza(delta, estimado, n, varianza):
     CI_i = estimado - stats.norm.ppf(1 - delta/2) * math.sqrt(varianza/n)
@@ -43,32 +43,20 @@ def  Calculo_intervalo_de_confianza(delta, estimado, n, varianza):
 
 def IntegracionMonteCarlo(funcion, n, nivel_confianza):
     tiempo_inicial = time.time()
-    # Inicializar variables
     S = 0
     T = 0
-    # Generar valores aleatorios y acumular términos
+
     for j in range(1, n+1):
-        x_al = random.uniform(0, 1) # Intervalo de integración [0,1]
-        y_al = random.uniform(0, 1) # Intervalo de integración [0,1]
+        x_al = random.uniform(0, 1)
+        y_al = random.uniform(0, 1)
         if j > 1:
             T = T + (1 - 1/j) * (funcion(x_al,y_al) - S/ (j-1))**2
         S = S + funcion(x_al,y_al)
-    
-    # for j in range(1, n+1):
-    #     x1 = random.uniform(0, 1)
-    #     x2 = random.uniform(0, 1)
-        
-    #     if (x1 - 0.5)**2 + (x2 - 0.5)**2 <= 0.4**2:
-    #         if j > 1:
-    #             T = T + (1-1/j) * (f(x1,x2)-S/(j-1) )**2 
-    #             S = S + f(x1,x2)
 
-    # Calcular estimación puntual de la integral y la varianza
     estimacion_integral = S / n
     estimacion_varianza = T / (n - 1)
     estimacion_varianza_integral = estimacion_varianza / n
     
-    # Calcular intervalo de confianza
     intervalo_confianza = Calculo_intervalo_de_confianza(1 - nivel_confianza, estimacion_integral, n, estimacion_varianza)
     return estimacion_integral, estimacion_varianza_integral, intervalo_confianza , estimacion_varianza, time.time() - tiempo_inicial
 
@@ -103,14 +91,13 @@ if print_tables:
     print(generate_html_table(estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion))
 
 # Parte b
-# se podría usar nN también
-def nN(epsilon, delta):
+def nN(epsilon, delta, estimacion_varianza):
     return math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2)
 
 error = 10**(-3)
 nivel_confianza = 0.95
 delta = 1 - nivel_confianza
-n = nN(error, delta)
+n = nN(error, delta, estimacion_varianza)
 
 print("Parte b")
 print("Número de muestras: ", n)
