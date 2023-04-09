@@ -1,0 +1,311 @@
+<!--
+PAUTAS sobre cómo ENTREGAR los EJERCICIOS realizados
+Algunos ejercicios se realizarán de forma individual; para otros se requerirá trabajar en grupos de 2
+estudiantes.
+Cada ejercicio debe ser entregado mediante un breve pero claro informe (en formato .pdf, .ps, o
+.html) indicando:
+I. La identificación del ejercicio (nro. de sesión, nro. de ejercicio si corresponde).
+II. Nro de grupo asignado, Nombres completos y CI de sus integrantes.
+III. La descripción del problema (texto del ejercicio).
+IV. Una breve descripción de la solución (seudocódigo, y descripción de técnicas avanzadas si
+las hubiera). Lenguaje de implementación y bibliotecas empleadas (adjuntar el código
+fuente).
+V. En caso de pedirse resultados computacionales, se debe reportar: 0) la plataforma de
+cómputo utilizada (computadora – modelo, procesador, memoria, sistema operativo) 1) las
+semillas empleadas; 2) los tamaños de muestra, y tiempos de cálculo; 3) todos los valores de
+parámetros de entrada, tanto del problema como de configuración de las técnicas si los
+hubiera; 4) los resultados numéricos incluyendo estimaciones puntuales, varianzas o
+desviaciones estándar, e intervalos de confianza (con al menos 4 cifras significativas).
+VI. Se adjuntará también un anexo con el log de las ejecuciones (identificando sus respectivos
+parametros) y de las salidas de los programas (tanto si es en pantalla como en archivos).
+ El informe se subirá en el lugar de entrega de la plataforma EVA de cada Unidad. Bajo ningún
+concepto podrá ser publicado en las news del curso 2010, ni en los foros del curso.
+-->
+
+
+<!-- # Entrega 4
+Ejercicio 7.1 (individual):
+Problema: supongamos que un programa de posgrado incluye un conjunto
+de P profesores y otro de S estudiantes, y que se desea asignar a cada
+estudiante un profesor para consultas, pero que todas las personas son de
+diferentes pa´ıses y comprenden distintos idiomas. Si cada estudiante tiene
+asignado un profesor para consultas, la cantidad total de formas de asignar
+profesores a los estudiantes es P
+S (hay P opciones para cada estudiante, y
+S estudiantes en total, la cantidad total de opciones es el producto sobre
+los estudiantes de las opciones de cada estudiante).
+Supongamos que nos interesa determinar cuantas formas hay de asignar
+profesores a los estudiantes, respetando que cada profesor asignado a un
+estudiante tenga un idioma en común con él (para que puedan
+comunicarse). Si hay L lenguajes posibles, podemos tener para cada
+estudiante s un subconjunto Id(s) con los lenguajes que entiende, y lo
+mismo para cada profesor p; y una asignación sólo ser´ıa válida si para cada
+16
+estudiante s y su profesor p(s), se cumple que Id(s) ∩ Id(p(s)) ̸= ∅ (estos
+conjuntos también podr´ıan representarse como matrices Ids,l e Idp,l, con
+entradas 1 cuando ese estudiante o profesor entienden el lenguaje l y 0 si
+no).
+Para estimar la cantidad de formas distintas de realizar estas asignaciones
+de profesores y estudiantes, es posible aplicar el método Monte Carlo.
+Se debe recibir en entrada el número de replicaciones a realizar, y el nivel
+de confianza; en salida, se debe dar la estimación del número de
+combinaciones NC, as´ı como la desviación estándar y un intervalo de
+confianza (del nivel especificado) calculado en base al criterio de
+Agresti-Coull.
+• Parte a: escribir un programa para hacer el cálculo previamente
+descrito. Entregar seudocódigo y código.
+• Parte b: sea el siguiente caso: Estudiantes/lenguajes: Maria: español,
+ingles; Sophie: inglés, francés; Liliana: español, portugués; Lucia:
+17
+inglés, portugués; Monique: francés; Rodrigo: español, inglés, francés;
+John: inglés; Neymar: portugués, español; Jacques: francés, portugués;
+Juan: español. Profesores: Tom: inglés, frances, español; Luciana:
+inglés, portugués; Gerard: inglés, francés; Silvia: español, francés.
+Usando el programa anterior, y empleando 1000 replicaciones de Monte
+Carlo, estimar los valores de cuantas combinaciones NC hay para
+asignar profesores a estudiantes y que tengan un idioma en común, con
+intervalos de confianza de nivel 95%.
+• Parte c: adaptar el programa para calcular el número de combinaciones
+si además queremos agregar como restricción que ningún profesor
+atienda menos de un estudiante ni más de cuatro estudiantes.
+Usando el programa modificado, y empleando 1000 replicaciones de
+Monte Carlo, estimar los valores de cuantas combinaciones NC hay para
+asignar profesores a estudiantes y que tengan un idioma en común y
+cuplan la restricción adicional mencionada, con intervalos de confianza
+de nivel 95%. -->
+
+
+<doctype html>
+
+    <html>
+    
+    <head>
+    
+    <meta charset="utf-8">
+    
+    <title>Ejercicio 7.1</title>
+    
+    <style type="text/css">
+    
+    /* Set font family and size for the entire document */
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+    
+    /* Style headings */
+    h1 {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    
+    h2 {
+      font-size: 20px;
+      margin-top: 15px;
+    }
+    
+    /* Add padding to paragraphs */
+    p {
+      padding-bottom: 10px;
+    }
+    
+    /* Style span snippets */
+    span {
+      background-color: #f5f5f5;
+      padding: 2px 4px;
+      font-size: 90%;
+      border-radius: 2px;
+      border: 1px solid #ddd;
+    }
+    
+    /* Style tables */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+      text-align: left;
+    }
+    
+    /* Add a gray background color to the page */
+    body {
+      background-color: #f5f5f5;
+    }
+    
+    /* Add a box shadow to the main content area */
+    main {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px #ddd;
+    }
+    
+    
+    </style>
+    
+    </head>
+    
+    <body>
+
+    <h1>Ejercicio 7.1</h1>
+
+    <h2> Grupo: N/A</h2>
+
+    <h2> Integrantes: </h2>
+    <ul>
+    <li>Nombre: Gabriel Kryger</li>
+    <li>CI: 4933558-9</li>
+    </ul>
+
+    <h2> Descripción del problema </h2>
+
+    <p>Supongamos que tenemos un conjunto de estudiantes y un conjunto de profesores. Cada estudiante tiene una lista de opciones de profesores a los que puede ser asignado, y cada profesor tiene una lista de opciones de estudiantes a los que puede ser asignado. Supongamos que nos interesa determinar cuantas formas hay de asignar profesores a los estudiantes, respetando que cada profesor asignado a un estudiante tenga un idioma en común con él (para que puedan comunicarse). Si hay L lenguajes posibles, podemos tener para cada estudiante s un subconjunto Id(s) con los lenguajes que entiende, y lo mismo para cada profesor p; y una asignación sólo sería válida si para cada estudiante s y su profesor p(s), se cumple que Id(s) ∩ Id(p(s)) ≠ ∅ (estos conjuntos también podrían representarse como matrices Ids,l e Idp,l, con entradas 1 cuando ese estudiante o profesor entienden el lenguaje l y 0 si no).</p>
+
+    <p>Para estimar la cantidad de formas distintas de realizar estas asignaciones de profesores y estudiantes, es posible aplicar el método Monte Carlo. Se debe recibir en entrada el número de replicaciones a realizar, y el nivel de confianza; en salida, se debe dar la estimación del número de combinaciones Nc, así como la desviación estándar y un intervalo de confianza (del nivel especificado) calculado en base al criterio de Agresti-Coull.</p>
+
+    <ul> 
+    <li>Parte a: escribir un programa para hacer el cálculo previamente descrito. Entregar seudocódigo y código.</li>
+    <li>Parte b: sea el siguiente caso: Estudiantes/lenguajes: Maria: español, ingles; Sophie: inglés, francés; Liliana: español, portugués; Lucia: inglés, portugués; Monique: francés; Rodrigo: español, inglés, francés; John: inglés; Neymar: portugués, español; Jacques: francés, portugués; Juan: español. Profesores: Tom: inglés, frances, español; Luciana: inglés, portugués; Gerard: inglés, francés; Silvia: español, francés. Usando el programa anterior, y empleando 1000 replicaciones de Monte Carlo, estimar los valores de cuantas combinaciones NC hay para asignar profesores a estudiantes y que tengan un idioma en común, con intervalos de confianza de nivel 95%.</li>
+    <li>Parte c: adaptar el programa para calcular el número de combinaciones si además queremos agregar como restricción que ningún profesor atienda menos de un estudiante ni más de cuatro estudiantes. Usando el programa modificado, y empleando 1000 replicaciones de Monte Carlo, estimar los valores de cuantas combinaciones NC hay para asignar profesores a estudiantes y que tengan un idioma en común y cuplan la restricción adicional mencionada, con intervalos de confianza de nivel 95%.</li>
+
+    <h2> Descripción de la solución </h2>
+    <!-- La idea general de la solucion es 
+    1) calcular la cantidad de combinaciones posibles de asignar profesores a estudiantes
+    2) sortear a todos los estudiantes para los profesores
+    3) ver el porcentaje de veces que se cumple las condiciones asignadas
+    4) pultiplicar el porcentaje por la cantidad de combinaciones posibles
+    5) calcular el intervalo de confianza
+    6) mostrar los resultados
+    7) repetir el proceso para la parte c
+    -->
+    <h3>La idea central del algoritmo es la siguiente:</h3>
+    <!-- <p><strong>Si podemos calcular la cantidad de combinaciones posibles</strong> y podemos aproximar qué porcentaje de ellas cumplen las condiciones, podemos calcular la cantidad de combinaciones que cumplen las condiciones simplemente multiplicando el porcentaje por la cantidad de combinaciones posibles.</p> -->
+    <p>Si podemos calcular la cantidad de combinaciones posibles y podemos aproximar qué porcentaje de ellas cumplen las condiciones</p>
+    <p><strong>Entonces podemos calcular aproximar la cantidad de casos que cumplen las condiciones</strong> (multiplicando el porcentaje por la cantidad de combinaciones posibles).</p>
+    <h3>Parte a: Pseudocódigo</h3>
+    Primero veremos una descripción del algoritmo, luego el pseudocódigo y luego el código en Python.
+    <h4>Descripción del algoritmo</h4>
+    <p>El algoritmo consiste en:</p>
+    <ol>
+      <li>Definir los estudiantes y los profesores</li>
+      <li>Calcular la cantidad de combinaciones posibles de asignar profesores a estudiantes</li>
+      <li>Sortear a todos los estudiantes para los profesores</li>
+      <li>Ver el porcentaje de veces que se cumple las condiciones asignadas</li>
+      <li>Pultiplicar el porcentaje por la cantidad de combinaciones posibles</li>
+      <li>Calcular el intervalo de confianza</li>
+      <li>Mostrar los resultados</li>
+    </ol>
+
+    <h4>Pseudocódigo</h4>
+    <pre>
+    <code>
+    #Definimos los estudiantes y los profesores
+
+    Estudiantes = { "Maria": ["español", "ingles"], "Sophie": ["ingles", "frances"], "Liliana": ["español", "portugues"], "Lucia": ["ingles", "portugues"], "Monique": ["frances"], "Rodrigo": ["español", "ingles", "frances"], "John": ["ingles"], "Neymar": ["portugues", "español"], "Jacques": ["frances", "portugues"], "Juan": ["español"]}
+
+    Profesores = { "Tom": ["ingles", "frances", "español"], "Luciana": ["ingles", "portugues"], "Gerard": ["ingles", "frances"], "Silvia": ["español", "frances"]}
+
+    #Definimos la cantidad de veces que se va a repetir el experimento
+    n = 1000
+
+    r = calcular_cantidad_combinaciones_posibles_de_asignar_profesores_a_estudiantes(Estudiantes, Profesores)
+    S = 0
+    for i to n:
+      Sortear a todos los estudiantes para los profesores
+      if (no hay algún profesor que no tenga un idioma en comun con uno de sus estudiantes (o en el caso de la parte c, que no tengan más de 4 estudiantes)):
+        S = S + 1
+    
+    porcentaje = S / n
+    cantidad_combinaciones_que_cumplen_condiciones = porcentaje * r
+    varianza = porcentaje * (r - porcentaje) / (n-1)
+    calcular_intervalo_de_confianza_con_Agresti_Coull(delta, porcentaje, n)
+
+    mostrar_resultados(cantidad_combinaciones_que_cumplen_condiciones, intervalo_de_confianza)
+    </code>
+    </pre>
+
+    <h4>Código en Python</h4>
+    <p> Se ha hecho un par de cabios para hacer el código más simple en vez de sumar 1 a S cada vez que se cumple la condición, se resta 1 cuando no se cumple la condición. </p>
+
+    <pre>
+    <code>
+    def MonteCarloConteo(Profesores, Estudiantes, n, delta, conCupo = False):
+      def cantidad_combinaciones(pelotas, cajas):
+        return cajas ** pelotas
+
+      r = cantidad_combinaciones( len(Estudiantes), len(Profesores))
+      S = 0
+      if conCupo == True:
+          cupo = 4
+              
+      for i in range(n):
+          S = S + 1 #Asumimos que la combinacion es valida
+          profesores_cupo = {profesor: 0 for profesor in Profesores} #Creamos un diccionario con los profesores y la cantidad de alumnos que tienen
+          for estudiante in Estudiantes:
+              profesor = random.choice(list(Profesores.keys())) # elige un profesor al azar
+              if (not any(Ip == 1 and Ie == 1 for Ip, Ie in zip(Profesores[profesor], Estudiantes[estudiante]))): #Vemos si el profesor tiene algun idioma en comun con el estudiante
+                  S = S-1 #Si no tiene idioma en comun, la combinacion no es valida
+                  break
+
+              if conCupo == True:
+                  profesores_cupo[profesor] = profesores_cupo[profesor] + 1 #Aumentamos en 1 la cantidad de alumnos que tiene el profesor
+                  if profesores_cupo[profesor] > cupo: #Vemos si el profesor tiene mas de 4 alumnos
+                      S = S-1 #Si el profesor tiene mas de 4 alumnos, la combinacion no es valida 
+                      break
+
+      integral = r*(S/n) #Calculamos la cantidad de combinaciones que cumplen las condiciones
+      varianza_integral = integral*(r-integral)/(n-1) #Calculamos la varianza de la cantidad de combinaciones que cumplen las condiciones
+      intervalo = Agresti_Coull(delta, integral/r, n) #Calculamos el intervalo de confianza
+
+      intervalo = [intervalo[0]*r, intervalo[1]*r]
+
+      return integral, varianza_integral**0.5,  intervalo
+    </code>
+    </pre>
+
+    <h3>Parte b: Cálculo de la cantidad de combinaciones posibles</h3>
+    <p>Este es el resultado de la ejecución del algoritmo para la parte b:</p>
+    <table><tr><th>Estimacion NC</th><th>desviación estándar</th><th>intervalo de confianza</th><th>tiempo de ejecucion</th></tr><tr><td>114294.784</td><td>10338.779431737357</td><td>[93958.8968512542, 134630.67114874578]</td><td>0.06796026229858398</td></tr></table>
+
+    <h3> Parte c: Cálculo de la cantidad de combinaciones posibles con cupo</h3>
+    <p>Este es el resultado de la ejecución del algoritmo para la parte c:</p>
+    <table><tr><th>Estimacion NC</th><th>desviación estándar</th><th>intervalo de confianza</th><th>tiempo de ejecucion</th></tr><tr><td>80740.352</td><td>8844.29830513299</td><td>[63282.206293357856, 98198.49770664214]</td><td>0.030983448028564453</td></tr></table>
+    
+    <h4>Descripción del algoritmo</h4>
+    <p>El algoritmo se divide en 3 partes:</p>
+    <ol>
+      <li>Calculo de la cantidad de combinaciones posibles</li>
+      <li>Simulación de Monte Carlo</li>
+      <li>Calculo del intervalo de confianza</li>
+    </ol>
+
+
+
+    <p>Nota: el código está en el archivo <a href="./code.py">code.py</a> 
+      <br>El metodo que ejecuta el algoritmo de Monte Carlo para aproximar la cantidad de grupos posibles está implementado en la funcion <i>MonteCarloConteo</i> 
+      <br>El metodo que ejecuta el algoritmo utilizado para el intervalo de confianza es Agresti_Coull y está implementado en la funcion <i>Agresti_Coull</i>
+    </p>
+
+
+    <p>
+      Entorno de ejecución:
+      <ul>
+        <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
+        <li>4 GB de RAM</li>
+        <li>Sistema operativo: Windows 10</li>
+        <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y, por lo tanto, continuando con la secuencia del random).</li>
+      </ul>
+    </p>
+    </body>
+
+</html>
+
+    
