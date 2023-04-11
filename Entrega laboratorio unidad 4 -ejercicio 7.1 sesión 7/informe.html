@@ -14,9 +14,9 @@ V. En caso de pedirse resultados computacionales, se debe reportar: 0) la plataf
 cómputo utilizada (computadora – modelo, procesador, memoria, sistema operativo) 1) las
 semillas empleadas; 2) los tamaños de muestra, y tiempos de cálculo; 3) todos los valores de
 parámetros de entrada, tanto del problema como de configuración de las técnicas si los
-hubiera; 4) los resultados numéricos incluyendo estimaciones puntuales, varianzas o
+hubiera; 4) los resultados numéricos incluyendo Estimaciónes puntuales, varianzas o
 desviaciones estándar, e intervalos de confianza (con al menos 4 cifras significativas).
-VI. Se adjuntará también un anexo con el log de las ejecuciones (identificando sus respectivos
+VI. Se adjuntará también un anexo con el log de las ejecuciónes (identificando sus respectivos
 parametros) y de las salidas de los programas (tanto si es en pantalla como en archivos).
  El informe se subirá en el lugar de entrega de la plataforma EVA de cada Unidad. Bajo ningún
 concepto podrá ser publicado en las news del curso 2010, ni en los foros del curso.
@@ -71,7 +71,7 @@ atienda menos de un estudiante ni más de cuatro estudiantes.
 Usando el programa modificado, y empleando 1000 replicaciones de
 Monte Carlo, estimar los valores de cuantas combinaciones NC hay para
 asignar profesores a estudiantes y que tengan un idioma en común y
-cuplan la restricción adicional mencionada, con intervalos de confianza
+cumplan la restricción adicional mencionada, con intervalos de confianza
 de nivel 95%. -->
 
 
@@ -174,22 +174,21 @@ de nivel 95%. -->
     <ul> 
     <li>Parte a: escribir un programa para hacer el cálculo previamente descrito. Entregar seudocódigo y código.</li>
     <li>Parte b: sea el siguiente caso: Estudiantes/lenguajes: Maria: español, ingles; Sophie: inglés, francés; Liliana: español, portugués; Lucia: inglés, portugués; Monique: francés; Rodrigo: español, inglés, francés; John: inglés; Neymar: portugués, español; Jacques: francés, portugués; Juan: español. Profesores: Tom: inglés, frances, español; Luciana: inglés, portugués; Gerard: inglés, francés; Silvia: español, francés. Usando el programa anterior, y empleando 1000 replicaciones de Monte Carlo, estimar los valores de cuantas combinaciones NC hay para asignar profesores a estudiantes y que tengan un idioma en común, con intervalos de confianza de nivel 95%.</li>
-    <li>Parte c: adaptar el programa para calcular el número de combinaciones si además queremos agregar como restricción que ningún profesor atienda menos de un estudiante ni más de cuatro estudiantes. Usando el programa modificado, y empleando 1000 replicaciones de Monte Carlo, estimar los valores de cuantas combinaciones NC hay para asignar profesores a estudiantes y que tengan un idioma en común y cuplan la restricción adicional mencionada, con intervalos de confianza de nivel 95%.</li>
+    <li>Parte c: adaptar el programa para calcular el número de combinaciones si además queremos agregar como restricción que ningún profesor atienda menos de un estudiante ni más de cuatro estudiantes. Usando el programa modificado, y empleando 1000 replicaciones de Monte Carlo, estimar los valores de cuantas combinaciones NC hay para asignar profesores a estudiantes y que tengan un idioma en común y cumplan la restricción adicional mencionada, con intervalos de confianza de nivel 95%.</li>
 
     <h2> Descripción de la solución </h2>
     <!-- La idea general de la solucion es 
     1) calcular la cantidad de combinaciones posibles de asignar profesores a estudiantes
     2) sortear a todos los estudiantes para los profesores
     3) ver el porcentaje de veces que se cumple las condiciones asignadas
-    4) pultiplicar el porcentaje por la cantidad de combinaciones posibles
+    4) Multiplicar el porcentaje por la cantidad de combinaciones posibles
     5) calcular el intervalo de confianza
     6) mostrar los resultados
     7) repetir el proceso para la parte c
     -->
     <h3>La idea central del algoritmo es la siguiente:</h3>
     <!-- <p><strong>Si podemos calcular la cantidad de combinaciones posibles</strong> y podemos aproximar qué porcentaje de ellas cumplen las condiciones, podemos calcular la cantidad de combinaciones que cumplen las condiciones simplemente multiplicando el porcentaje por la cantidad de combinaciones posibles.</p> -->
-    <p>Si podemos calcular la cantidad de combinaciones posibles y podemos aproximar qué porcentaje de ellas cumplen las condiciones</p>
-    <p><strong>Entonces podemos calcular aproximar la cantidad de casos que cumplen las condiciones</strong> (multiplicando el porcentaje por la cantidad de combinaciones posibles).</p>
+    <p>Si podemos calcular la cantidad de combinaciones posibles y podemos aproximar qué porcentaje de ellas cumplen las condiciones <strong>Entonces podemos calcular aproximar la cantidad de casos que cumplen las condiciones</strong> (multiplicando el porcentaje por la cantidad de combinaciones posibles).</p>
     <h3>Parte a: Pseudocódigo</h3>
     Primero veremos una descripción del algoritmo, luego el pseudocódigo y luego el código en Python.
     <h4>Descripción del algoritmo</h4>
@@ -197,9 +196,9 @@ de nivel 95%. -->
     <ol>
       <li>Definir los estudiantes y los profesores</li>
       <li>Calcular la cantidad de combinaciones posibles de asignar profesores a estudiantes</li>
-      <li>Sortear a todos los estudiantes para los profesores</li>
-      <li>Ver el porcentaje de veces que se cumple las condiciones asignadas</li>
-      <li>Pultiplicar el porcentaje por la cantidad de combinaciones posibles</li>
+      <li>Sortear la asignación de los estudiantes para los profesores N veces</li>
+      <li>Ver el porcentaje de veces que se cumple las condiciones para que la asignación sea correcta</li>
+      <li>Multiplicar el porcentaje por la cantidad de combinaciones posibles</li>
       <li>Calcular el intervalo de confianza</li>
       <li>Mostrar los resultados</li>
     </ol>
@@ -225,7 +224,7 @@ de nivel 95%. -->
     
     porcentaje = S / n
     cantidad_combinaciones_que_cumplen_condiciones = porcentaje * r
-    varianza = porcentaje * (r - porcentaje) / (n-1)
+    varianza = cantidad_combinaciones_que_cumplen_condiciones  * (r - cantidad_combinaciones_que_cumplen_condiciones ) / (n-1)
     calcular_intervalo_de_confianza_con_Agresti_Coull(delta, porcentaje, n)
 
     mostrar_resultados(cantidad_combinaciones_que_cumplen_condiciones, intervalo_de_confianza)
@@ -273,25 +272,16 @@ de nivel 95%. -->
 
     <h3>Parte b: Cálculo de la cantidad de combinaciones posibles</h3>
     <p>Este es el resultado de la ejecución del algoritmo para la parte b:</p>
-    <table><tr><th>Estimacion NC</th><th>desviación estándar</th><th>intervalo de confianza</th><th>tiempo de ejecucion</th></tr><tr><td>114294.784</td><td>10338.779431737357</td><td>[93958.8968512542, 134630.67114874578]</td><td>0.06796026229858398</td></tr></table>
+    <table><tr><th>Estimación NC</th><th>desviación estándar</th><th>intervalo de confianza</th><th>tiempo de ejecución</th></tr><tr><td>114294.784</td><td>10338.779431737357</td><td>[93958.8968512542, 134630.67114874578]</td><td>0.06796026229858398</td></tr></table>
 
     <h3> Parte c: Cálculo de la cantidad de combinaciones posibles con cupo</h3>
     <p>Este es el resultado de la ejecución del algoritmo para la parte c:</p>
-    <table><tr><th>Estimacion NC</th><th>desviación estándar</th><th>intervalo de confianza</th><th>tiempo de ejecucion</th></tr><tr><td>80740.352</td><td>8844.29830513299</td><td>[63282.206293357856, 98198.49770664214]</td><td>0.030983448028564453</td></tr></table>
+    <table><tr><th>Estimación NC</th><th>desviación estándar</th><th>intervalo de confianza</th><th>tiempo de ejecución</th></tr><tr><td>80740.352</td><td>8844.29830513299</td><td>[63282.206293357856, 98198.49770664214]</td><td>0.030983448028564453</td></tr></table>
     
-    <h4>Descripción del algoritmo</h4>
-    <p>El algoritmo se divide en 3 partes:</p>
-    <ol>
-      <li>Calculo de la cantidad de combinaciones posibles</li>
-      <li>Simulación de Monte Carlo</li>
-      <li>Calculo del intervalo de confianza</li>
-    </ol>
-
-
 
     <p>Nota: el código está en el archivo <a href="./code.py">code.py</a> 
-      <br>El metodo que ejecuta el algoritmo de Monte Carlo para aproximar la cantidad de grupos posibles está implementado en la funcion <i>MonteCarloConteo</i> 
-      <br>El metodo que ejecuta el algoritmo utilizado para el intervalo de confianza es Agresti_Coull y está implementado en la funcion <i>Agresti_Coull</i>
+      <br>El método que ejecuta el algoritmo de Monte Carlo para aproximar la cantidad de grupos posibles está implementado en la función <i>MonteCarloConteo</i> 
+      <br>El método que ejecuta el algoritmo utilizado para el intervalo de confianza es Agresti_Coull y está implementado en la función <i>Agresti_Coull</i>
     </p>
 
 
