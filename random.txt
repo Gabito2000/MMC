@@ -1,0 +1,1 @@
+{"jsonrpc":"2.0","result":{"random":{"data":[32557,97916,94301,2622,80324,76834,83438,95380,53903,88078],"completionTime":"2023-04-19 21:11:27Z"},"bitsUsed":166,"bitsLeft":249834,"requestsLeft":999,"advisoryDelay":2600},"id":24565}

@@ -1,0 +1,247 @@
+<!--
+PAUTAS sobre cómo ENTREGAR los EJERCICIOS realizados
+Algunos ejercicios se realizarán de forma individual; para otros se requerirá trabajar en grupos de 2
+estudiantes.
+Cada ejercicio debe ser entregado mediante un breve pero claro informe (en formato .pdf, .ps, o
+.html) indicando:
+I. La identificación del ejercicio (nro. de sesión, nro. de ejercicio si corresponde).
+II. Nro de grupo asignado, Nombres completos y CI de sus integrantes.
+III. La descripción del problema (texto del ejercicio).
+IV. Una breve descripción de la solución (seudocódigo, y descripción de técnicas avanzadas si
+las hubiera). Lenguaje de implementación y bibliotecas empleadas (adjuntar el código
+fuente).
+V. En caso de pedirse resultados computacionales, se debe reportar: 0) la plataforma de
+cómputo utilizada (computadora – modelo, procesador, memoria, sistema operativo) 1) las
+semillas empleadas; 2) los tamaños de muestra, y tiempos de cálculo; 3) todos los valores de
+parámetros de entrada, tanto del problema como de configuración de las técnicas si los
+hubiera; 4) los resultados numéricos incluyendo estimaciones puntuales, varianzas o
+desviaciones estándar, e intervalos de confianza (con al menos 4 cifras significativas).
+VI. Se adjuntará también un anexo con el log de las ejecuciones (identificando sus respectivos
+parametros) y de las salidas de los programas (tanto si es en pantalla como en archivos).
+ El informe se subirá en el lugar de entrega de la plataforma EVA de cada Unidad. Bajo ningún
+concepto podrá ser publicado en las news del curso 2010, ni en los foros del curso.
+-->
+
+
+<!-- # Ejercicios - Entrega 3
+# Ejercicio 6.1: [individual]
+# Problema: se idealiza una monta˜na como un cono inscrito en una regi´on
+# cuadrada de lado 1 km. La base de la monta˜na es circular, con centro en
+# (0.5, 0.5) y radio r = 0.4km, y la altura es H = 8km. La altura de cada
+# punto (x, y) de la monta˜na est´a dada por la funci´on
+# f(x, y) = H − H/r ×
+# p
+# (x − 0.5)2 + (y − 0.5)2, en la zona definida por el
+# c´ırculo, y 0 fuera del c´ırculo. El volumen total de la monta˜na (en km
+# c´ubicos) puede verse como la integral de la funci´on altura en la regi´on.
+# • Parte a: escribir un programa para calcular el vol´umen por Monte Carlo.
+# Realizar 106
+# replicaciones y estimar el valor de ζ y el error cometido
+# (con nivel de confianza 0.95), utilizando como criterio la aproximaci´on
+# normal.
+# • Parte b: en base al valor estimado en la parte a, calcular el n´umero de
+# 20
+# replicaciones necesario para obtener un error absoluto menor a 10−3
+# (con nivel de confianza 0.95).
+# • Parte c: realizar esa cantidad de replicaciones y estimar ζ y su intervalo
+# de confianza.
+# Comentario - en un s´olido regular como el del ejercicio, este volumen
+# podr´ıa calcularse tambi´en anal´ıticamente. En el caso de una monta˜na real,
+# la altura para cada punto no va a surgir de una f´ormula, sino que se debe
+# usar informaci´on de altura procedente de mediciones reales, por ejemplo de
+# informaci´on satelital
+# -->
+
+<!-- Resultados -->
+<!-- Parte a
+Estimación integral:  0.4197975837623529
+Estimación varianza:  7.663289669880204e-06
+Intervalo de confianza:  [0.41883029301230834, 0.4207648745123974]
+Parte b
+Número de muestras:  1844440
+Parte c
+Estimación integral:  0.4210788550136127
+Estimación varianza:  4.159431506202431e-06
+Intervalo de confianza:  [0.42036631900170784, 0.42179139102551755] -->
+
+<doctype html>
+
+    <html>
+    
+    <head>
+    
+    <meta charset="utf-8">
+    
+    <title>Ejercicio 6.1</title>
+    
+    <style type="text/css">
+    
+    /* Set font family and size for the entire document */
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+    
+    /* Style headings */
+    h1 {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    
+    h2 {
+      font-size: 20px;
+      margin-top: 15px;
+    }
+    
+    /* Add padding to paragraphs */
+    p {
+      padding-bottom: 10px;
+    }
+    
+    /* Style span snippets */
+    span {
+      background-color: #f5f5f5;
+      padding: 2px 4px;
+      font-size: 90%;
+      border-radius: 2px;
+      border: 1px solid #ddd;
+    }
+    
+    /* Style tables */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+      text-align: left;
+    }
+    
+    /* Add a gray background color to the page */
+    body {
+      background-color: #f5f5f5;
+    }
+    
+    /* Add a box shadow to the main content area */
+    main {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px #ddd;
+    }
+    
+    
+    </style>
+    
+    </head>
+    
+    <body>
+
+    <h1>Ejercicio 6.1</h1>
+
+    <h2> Grupo: N/A</h2>
+
+    <h2> Integrantes: </h2>
+    <ul>
+    <li>Nombre: Gabriel Kryger</li>
+    <li>CI: 4933558-9</li>
+    </ul>
+
+    <h2> Descripción del problema </h2>
+    <p> 
+      se idealiza una montaña como un cono inscrito en una región cuadrada de lado 1 km. La base de la montaña es circular, con centro en (0.5, 0.5) y radio r = 0.4km, y la altura es H = 8km. La altura de cada punto (x, y) de la montaña está dada por la función 
+      <img src="https://latex.codecogs.com/gif.latex?f(x,&space;y)&space;=&space;H&space;-&space;H/r&space;\times&space;\sqrt{(x&space;-&space;0.5)^2&space;&plus;&space;(y&space;-&space;0.5)^2}" title="f(x, y) = H - H/r \times \sqrt{(x - 0.5)^2 + (y - 0.5)^2}" />
+      , en la zona definida por el círculo, y 0 fuera del círculo. El volumen total de la montaña (en km cúbicos) puede verse como la integral de la función altura en la región.
+      <ul>
+        <li>Parte a: escribir un programa para calcular el volúmen por Monte Carlo.Realizar 10^6 replicaciones y estimar el valor de ζ y el error cometido (con nivel de confianza 0.95), utilizando como criterio la aproximación normal.</li>
+        <li>Parte b: en base al valor estimado en la parte a, calcular el número de replicaciones necesario para obtener un error absoluto menor a 10^-3 (con nivel de confianza 0.95).</li>
+        <li>Parte c: realizar esa cantidad de replicaciones y estimar ζ y su intervalo de confianza.</li>
+      </ul>
+    </p>
+    
+
+    <h2> Descripción de la solución </h2>
+    <h3> Parte a</h3>
+    <p> Se implementó en python el pseudocódigo proporcionado en la página 9 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
+    <p> El código se encuentra en el archivo <a href="./code.py"> code.py </a> con el nombre IntegracionMonteCarlo.</p>
+    <p> La formula de la altura queda como:</p>
+    <ul>
+      <li>
+      Si (x-0.5)^2 + (y-0.5)^2 <= 0.4 <br>
+      <img title="f(x, y) = 8 - 8/r \times \sqrt{(x - 0.5)^2 + (y - 0.5)^2}" src="https://latex.codecogs.com/gif.latex?f(x,&space;y)&space;=&space;8&space;-&space;8/0.4&space;\times&space;\sqrt{(x&space;-&space;0.5)^2&space;&plus;&space;(y&space;-&space;0.5)^2}" />
+      </li>
+      <li>
+      Si no <br>
+      <img title="f(x, y) = 0" src="https://latex.codecogs.com/gif.latex?f(x,&space;y)&space;=&space;0" />
+      </li>
+    </ul>
+    <p> Para el cálculo de intervalo de confianza se utilizó la formula de la página 12 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso.</p>
+    <img src="https://latex.codecogs.com/gif.latex?[\bar{\zeta}_n&space;-&space;\Phi^{-1}(1&space;-&space;\frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}},\bar{\zeta}_n&space;&plus;&space;\Phi^{-1}(1&space;-&space;\frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}}]" title="\bar{\zeta}_n - \Phi^{-1}(1 - \frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}},\bar{\zeta}_n + \Phi^{-1}(1 - \frac{\delta}{2})\left(\frac{\hat{\sigma}^2_n}{n}\right)^{\frac{1}{2}}" />
+    <p> Donde:</p>
+    <ul>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\bar{\zeta}_n" title="\bar{\zeta}_n" /> es la estimación del volumen de la montaña.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}^2_n" title="\hat{\sigma}^2_n" /> es la varianza del estimador.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}" title="\Phi^{-1}" /> es el valor de la función inversa de la distribución normal.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?\delta" title="\delta" /> es el nivel de confianza.</li>
+      <li> <img src="https://latex.codecogs.com/gif.latex?n" title="n" /> es el número de muestras.</li>
+    </ul>
+
+    <p> El resultado es el siguiente: </p>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3371610906796791</td><td>3.5574755592356313</td><td>3.5574755592356312e-06</td><td>[1.333464349430088, 1.3408578319292703]</td><td>4.47283673286438</td></tr></table>
+    <h3> Parte b</h3>
+    <p> Se cálculo del número de muestras necesarias para obtener un error absoluto menor a 10^−3 (con nivel de confianza 0.95) con la formula dada en el item 2 de la página 14 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso utilizando la varianza calculada en el ejercicio A.</p>
+      <!-- math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2) -->
+    </p> 
+    <img src="https://latex.codecogs.com/gif.latex?\large&space;\lceil&space;\left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2&space;\cdot&space;\sigma^2_n&space;\cdot&space;\frac{1}{\epsilon^2}&space;\rceil" title="\large \lceil \left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2 \cdot \sigma^2_n \cdot \frac{1}{\epsilon^2} \rceil" />
+    <p>
+      Donde: <br>
+      <ul>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}" title="\Phi^{-1}" /> es la función inversa de la distribución normal estándar </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\delta" title="\delta" /> es el nivel de confianza </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\sigma^2_n" title="\sigma^2_n" /> es la varianza del estimador </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /> es el error absoluto </li>
+      </ul>
+    </p>
+    <p>
+      El resultado es: 13.665.896 <br>
+      (Es la cantidad de muestras necesarias para que el error sea menor a 10^-3 y el nivel de confianza sea 0.95)
+    </p>
+    <h3> Parte c</h3>
+    <p> Ahora con el numero de muestras necesario calculado se volvió a ejecutar el código pasando como parámetro el número de muestras calculado en la parte b y el nivel de confianza (0.95). </p>
+    <p> El resultado de la ejecución del código es el siguiente: </p>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3399899305240963</td><td>3.5646348527679046</td><td>2.6084164937066e-07</td><td>[1.3389889248024447, 1.340990936245748]</td><td>70.68711805343628</td></tr></table>
+    <p>
+      Entorno de ejecución:
+      <ul>
+        <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
+        <li>4 GB de RAM</li>
+        <li>Sistema operativo: Windows 10</li>
+        <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y, por lo tanto, continuando con la secuencia del random).</li>
+      </ul>
+    </p>
+    <p>
+      <strong>Para ejecutar el código:</strong> <br>
+      <ul>
+        <li>
+          <strong>El código del programa se encuentra en el archivo <a href="./code.py">code.py</a></strong>
+        </li>
+        <li>
+        <strong>Es necesario instalar la biblioteca stats</strong> se puede hacer ejecutando: <i>pip install stats</i> (esta librería se utiliza para calcular la inversa de la normal)
+        </li>
+        <li>
+          <strong>Para ejecutar el código</strong> <i>ejecutar: python code.py</i>
+        </li>
+      </ul>
+    </p>
+    </body>
+
+</html>
+
+    

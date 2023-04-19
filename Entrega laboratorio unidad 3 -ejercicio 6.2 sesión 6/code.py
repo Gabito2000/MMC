@@ -93,8 +93,10 @@ vreal = (1/2)*(1/3)*(1/4)*(1/5)*(1/6)
 print("Valor real: ", vreal)
 nivel_confianza = 0.95
 
-estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion = IntegracionMonteCarlo(f2, 10**4, nivel_confianza)
-
+estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion = IntegracionMonteCarlo(f2, 10**6, nivel_confianza)
+print("Estimación: ", estimacion_integral)
+print("estimacion_varianza",estimacion_varianza)
+print("estimacion_varianza_integral",estimacion_varianza_integral)
 delta =  1 - nivel_confianza
 epsilon = math.pow(10, -4)
 n_N =  nN(epsilon, delta, estimacion_varianza)
