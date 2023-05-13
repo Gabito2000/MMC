@@ -1,0 +1,223 @@
+<!-- # Entrega 6
+# Ejercicio 11.1: (individual)
+# Para generar un punto aleatorio (X1, X2) en un c´ırculo de centro (0, 0) y
+# radio 1, es posible hacerlo de la forma siguiente (derivaci´on disponible en
+# las p´aginas 234 y 235 del libro de referencia del curso, “Monte Carlo:
+# concepts, algorithms and applications”, Fishman 1996):
+# • se genera un valor aleatorio r, de distribuci´on Fr(x) = x
+# 2 para
+# 0 ≤ x ≤ 1, y 0 para cualquier otro x;
+# • se generan dos v.a. independientes Z1 y Z2 de distribuci´on normal
+# (0, 1);
+# • se calcula X1 = rZ1/
+# p
+# (Z
+# 2
+# 1 + Z
+# 2
+# 2
+# ) y X2 = rZ2/
+# p
+# (Z
+# 2
+# 1 + Z
+# 2
+# 2
+# ).
+# Utilizar esta propiedad para volver a resolver el Ejercicio 6.1 parte a, pero
+# 20
+# generando ´unicamente valores de puntos dentro del c´ırculo de base de la
+# monta˜na:
+# Problema: se idealiza una monta˜na como un cono inscrito en una regi´on
+# cuadrada de lado 1 km. La base de la monta˜na es circular, con centro en
+# (0.5, 0.5) y radio r = 0.4km, y la altura es H = 8km. La altura de cada
+# punto (x, y) de la monta˜na est´a dada por la funci´on
+# f(x, y) = H − H/r ×
+# p
+# (x − 0.5)2 + (y − 0.5)2, en la zona definida por el
+# c´ırculo, y 0 fuera del c´ırculo. El volumen total de la monta˜na (en km
+# c´ubicos) puede verse como la integral de la funci´on altura en la regi´on.
+# Parte a: escribir un programa para calcular el vol´umen por Monte Carlo.
+# Realizar 106
+# replicaciones y estimar el valor de ζ y el error cometido (con
+# nivel de confianza 0.95), utilizando como criterio la aproximaci´on normal.
+# Comparar la precisi´on obtenida con la alcanzada en el ejercicio 6.1.
+# Sugerencia: tener en cuenta que al estar generando puntos dentro del
+# c´ırculo, estamos calculando una integral de Lebesgue-Stieltjes, por lo que
+# es necesario ajustar el integrando de manera que quede expl´ıcita la integral
+# 21
+# en la forma R
+# k(z)dF(z), con z un vector. En particular, por ser un sorteo
+# uniforme dentro del c´ırculo, la densidad de probabilidad en el c´ırculo es
+# 1/(´area del c´ırculo), y 0 afuera del mismo.
+# Fecha entrega: Ver cronograma del curso.
+
+# Teorema 1. Sea F(z), a ≤ z ≤ b una funci´on de distribuci´on, y su
+# inversa F
+# −1 definida por
+# F^−1
+# (u) = inf{z ∈ [a, b] : F(z) ≥ u, 0 ≤ u ≤ 1}.
+# Sea U una variable aleatoria de distribuci´on uniforme U(0, 1). Entonces
+# Z = F^−1
+# (U) es una variable aleatoria de distribuci´on F. -->
+
+
+
+<doctype html>
+
+    <html>
+    
+    <head>
+    
+    <meta charset="utf-8">
+    
+    <title>Ejercicio 6.1</title>
+    
+    <style type="text/css">
+    
+    /* Set font family and size for the entire document */
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+    
+    /* Style headings */
+    h1 {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    
+    h2 {
+      font-size: 20px;
+      margin-top: 15px;
+    }
+    
+    /* Add padding to paragraphs */
+    p {
+      padding-bottom: 10px;
+    }
+    
+    /* Style span snippets */
+    span {
+      background-color: #f5f5f5;
+      padding: 2px 4px;
+      font-size: 90%;
+      border-radius: 2px;
+      border: 1px solid #ddd;
+    }
+    
+    /* Style tables */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+      text-align: left;
+    }
+    
+    /* Add a gray background color to the page */
+    body {
+      background-color: #f5f5f5;
+    }
+    
+    /* Add a box shadow to the main content area */
+    main {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px #ddd;
+    }
+    
+    
+    </style>
+    
+    </head>
+    
+    <body>
+
+    <h1>Ejercicio 11.1</h1>
+
+    <h2> Grupo: N/A</h2>
+
+    <h2> Integrantes: </h2>
+    <ul>
+    <li>Nombre: Gabriel Kryger</li>
+    <li>CI: 4933558-9</li>
+    </ul>
+
+    <h2> Descripción del problema </h2>
+    <p> 
+      Para generar un punto aleatorio (X1, X2) en un círculo de centro (0, 0) y radio r, se puede generar un punto aleatorio (Z1, Z2) en un cuadrado de lado 2r, y luego transformar el punto (Z1, Z2) en un punto (X1, X2) en el círculo de radio r, mediante las siguientes ecuaciones: 
+      <ul> 
+        <li> X1 = r * cos(2 * pi * Z1) * sqrt(Z2) </li>
+        <li> X2 = r * sin(2 * pi * Z1) * sqrt(Z2) </li>
+        
+      </ul>
+    
+
+    </p>
+    
+
+    <h2> Descripción de la solución </h2>
+    
+
+    <p> El resultado de el ejercicio 6.1 fue es el siguiente: </p>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3371610906796791</td><td>3.5574755592356313</td><td>3.5574755592356312e-06</td><td>[1.333464349430088, 1.3408578319292703]</td><td>4.47283673286438</td></tr></table>
+    <h3> Parte b</h3>
+    <p> Se cálculo del número de muestras necesarias para obtener un error absoluto menor a 10^−3 (con nivel de confianza 0.95) con la formula dada en el item 2 de la página 14 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso utilizando la varianza calculada en el ejercicio A.</p>
+      <!-- math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2) -->
+    </p> 
+    <img src="https://latex.codecogs.com/gif.latex?\large&space;\lceil&space;\left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2&space;\cdot&space;\sigma^2_n&space;\cdot&space;\frac{1}{\epsilon^2}&space;\rceil" title="\large \lceil \left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2 \cdot \sigma^2_n \cdot \frac{1}{\epsilon^2} \rceil" />
+    <p>
+      Donde: <br>
+      <ul>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}" title="\Phi^{-1}" /> es la función inversa de la distribución normal estándar </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\delta" title="\delta" /> es el nivel de confianza </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\sigma^2_n" title="\sigma^2_n" /> es la varianza del estimador </li>
+        <li> <img src="https://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /> es el error absoluto </li>
+      </ul>
+    </p>
+    <p>
+      El resultado es: 13.665.896 <br>
+      (Es la cantidad de muestras necesarias para que el error sea menor a 10^-3 y el nivel de confianza sea 0.95)
+    </p>
+    <h3> Parte c</h3>
+    <p> Ahora con el numero de muestras necesario calculado se volvió a ejecutar el código pasando como parámetro el número de muestras calculado en la parte b y el nivel de confianza (0.95). </p>
+    <p> El resultado de la ejecución del código es el siguiente: </p>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3399899305240963</td><td>3.5646348527679046</td><td>2.6084164937066e-07</td><td>[1.3389889248024447, 1.340990936245748]</td><td>70.68711805343628</td></tr></table>
+    <p>
+      Entorno de ejecución:
+      <ul>
+        <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
+        <li>4 GB de RAM</li>
+        <li>Sistema operativo: Windows 10</li>
+        <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y, por lo tanto, continuando con la secuencia del random).</li>
+      </ul>
+    </p>
+    <p>
+      <strong>Para ejecutar el código:</strong> <br>
+      <ul>
+        <li>
+          <strong>El código del programa se encuentra en el archivo <a href="./code.py">code.py</a></strong>
+        </li>
+        <li>
+        <strong>Es necesario instalar la biblioteca stats</strong> se puede hacer ejecutando: <i>pip install stats</i> (esta librería se utiliza para calcular la inversa de la normal)
+        </li>
+        <li>
+          <strong>Para ejecutar el código</strong> <i>ejecutar: python code.py</i>
+        </li>
+      </ul>
+    </p>
+    </body>
+
+</html>
+
+    
