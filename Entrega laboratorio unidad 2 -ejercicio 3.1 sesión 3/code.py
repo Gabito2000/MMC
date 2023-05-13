@@ -105,9 +105,9 @@ if ejecutar_solo_una_parte:
 else:
     ejecutarParte("A1", 10000, True)
 
-    ejecutarParte("A2", 1000000, True)
+    ejecutarParte("A2", 59850, True)
 
-    ejecutarParte("B", 1000000, False)
+    ejecutarParte("B", 59850, False)
     
     volumenExacto = calculateExactVolume()
     

@@ -31,7 +31,7 @@ import scipy.stats as stats
 import time
 import sys
 
-txt_con_tabla_de_random = "Entrega laboratorio unidad 4 -ejercicio 8.1/random3.txt"
+txt_con_tabla_de_random = "Entrega laboratorio unidad 4 -ejercicio 8.1/random3.txt" # SI SE CAMBIA POR RANDdigits.TXT DESCOMENTAR LA LINEA 47
 random_arr = []
 # cargar tabla de random en un array
 with open(txt_con_tabla_de_random) as f:
@@ -44,7 +44,7 @@ random_arr = [x.strip() for x in random_arr]
 random_arr = [x.split(" ") for x in random_arr]
 
 #remove the index
-random_arr = [x[1:] for x in random_arr]
+# random_arr = [x[1:] for x in random_arr]
 
 #remove all empty strings
 random_arr = [list(filter(None, x)) for x in random_arr]
@@ -58,6 +58,10 @@ random_arr = [float(x) for x in random_arr]
 #convert between 0 and 1
 random_arr = [x/(10**5) for x in random_arr]
 
+print("Se cargó la tabla de random con {} valores".format(len(random_arr)))
+
+cantidad_de_elementos = len(random_arr)
+
 random = {
     "index": 0,
     "get": lambda: random_arr[random["index"]],
@@ -69,6 +73,8 @@ random = {
 def get_next():
     value = random_arr[random["index"]]
     random["index"] = (random["index"] + 1) % (len(random_arr)-1)
+    # if random["index"] == 0:
+    #     print("Se acabó la tabla de random")
     return value
     
 
@@ -136,9 +142,9 @@ if ejecutar_solo_una_parte:
 else:
     ejecutarParte("A1", 10000, True)
 
-    ejecutarParte("A2", 1000000, True)
+    ejecutarParte("A2", cantidad_de_elementos, True)
 
-    ejecutarParte("B", 1000000, False)
+    ejecutarParte("B", cantidad_de_elementos, False)
     
     volumenExacto = calculateExactVolume()
     
