@@ -1,4 +1,4 @@
-<!-- # Entrega 6
+<!-- # Entrega 11.1: (individual)
 # Ejercicio 11.1: (individual)
 # Para generar un punto aleatorio (X1, X2) en un c´ırculo de centro (0, 0) y
 # radio 1, es posible hacerlo de la forma siguiente (derivaci´on disponible en
@@ -71,7 +71,7 @@
     
     <meta charset="utf-8">
     
-    <title>Ejercicio 6.1</title>
+    <title>Ejercicio 11.1</title>
     
     <style type="text/css">
     
@@ -155,44 +155,140 @@
 
     <h2> Descripción del problema </h2>
     <p> 
-      Para generar un punto aleatorio (X1, X2) en un círculo de centro (0, 0) y radio r, se puede generar un punto aleatorio (Z1, Z2) en un cuadrado de lado 2r, y luego transformar el punto (Z1, Z2) en un punto (X1, X2) en el círculo de radio r, mediante las siguientes ecuaciones: 
-      <ul> 
-        <li> X1 = r * cos(2 * pi * Z1) * sqrt(Z2) </li>
-        <li> X2 = r * sin(2 * pi * Z1) * sqrt(Z2) </li>
-        
-      </ul>
-    
-
+      Para generar un punto aleatorio (X1, X2) en un círculo de centro (0, 0) y radio 1, es posible hacerlo de la forma siguiente (derivación disponible enlas páginas 234 y 235 del libro de referencia del curso, “Monte Carlo: concepts, algorithms and applications”, Fishman 1996):
     </p>
-    
+    <ul>
+      <li> 
+        Se genera un valor aleatorio r de distribución Fr(x) = x^2, para 0 ≤ x ≤ 1, y 0 para cualquier otro x; 
+      </li>
+      <li> 
+        Se generan dos v.a. independientes Z1 y Z2, de distribución normal (0, 1);
+      </li>
+      <li>
+        Se calcula X1 = r * Z1 / sqrt(Z1^2 + Z2^2) y X2 = r * Z2 / sqrt(Z1^2 + Z2^2).
+      </li>    
+    </ul>
+    <p>
+      Utilizar esta propiedad para volver a resolver el Ejercicio 6.1 parte a, pero generando únicamente valores de puntos dentro del círculo de base de la montaña.
+
+      Problema: se idealiza una montaña como un cono inscrito en una región cuadrada de lado 1 km. La base de la montaña es circular, con centro en (0.5, 0.5) y radio r = 0.4km, y la altura es H = 8km. La altura de cada punto (x, y) de la montaña está dada por la función f(x, y) = H − H/r × p (x − 0.5)^2 + (y − 0.5)^2, en la zona definida por el círculo y 0 fuera del círculo. El volumen total de la montaña (en km cúbicos) puede verse como la integral de la función altura en la región. 
+
+      Parte a: escribir un programa para calcular el volumen por Monte Carlo. Realizar 10^6 replicaciones y estimar el valor de ζ y el error cometido (con nivel de confianza 0.95), utilizando como criterio la aproximación normal. Comparar la precisión obtenida con la alcanzada en el ejercicio 6.1.
+    </p>
+
 
     <h2> Descripción de la solución </h2>
-    
-
-    <p> El resultado de el ejercicio 6.1 fue es el siguiente: </p>
-    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3371610906796791</td><td>3.5574755592356313</td><td>3.5574755592356312e-06</td><td>[1.333464349430088, 1.3408578319292703]</td><td>4.47283673286438</td></tr></table>
-    <h3> Parte b</h3>
-    <p> Se cálculo del número de muestras necesarias para obtener un error absoluto menor a 10^−3 (con nivel de confianza 0.95) con la formula dada en el item 2 de la página 14 de la <a href="https://eva.fing.edu.uy/pluginfile.php/158908/mod_resource/content/7/Unidad2-Sesion06.pdf"> sesión 6 </a> de la unidad 2 del curso utilizando la varianza calculada en el ejercicio A.</p>
-      <!-- math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2) -->
-    </p> 
-    <img src="https://latex.codecogs.com/gif.latex?\large&space;\lceil&space;\left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2&space;\cdot&space;\sigma^2_n&space;\cdot&space;\frac{1}{\epsilon^2}&space;\rceil" title="\large \lceil \left(\Phi^{-1}\left(1-\frac{\delta}{2}\right)\right)^2 \cdot \sigma^2_n \cdot \frac{1}{\epsilon^2} \rceil" />
     <p>
-      Donde: <br>
-      <ul>
-        <li> <img src="https://latex.codecogs.com/gif.latex?\Phi^{-1}" title="\Phi^{-1}" /> es la función inversa de la distribución normal estándar </li>
-        <li> <img src="https://latex.codecogs.com/gif.latex?\delta" title="\delta" /> es el nivel de confianza </li>
-        <li> <img src="https://latex.codecogs.com/gif.latex?\sigma^2_n" title="\sigma^2_n" /> es la varianza del estimador </li>
-        <li> <img src="https://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /> es el error absoluto </li>
-      </ul>
+      Se implemento una función llamada generar_puntos que recibe como parámetro la cantidad de puntos a generar y devuelve una lista de puntos (x,y) que se encuentran dentro del círculo de radio 0.4 y centro (0.5, 0.5). <br>
+      Esta función se implemento siguiendo el siguiente pseudocódigo:
+    </p>
+      
+      <pre>
+        <code>
+          <strong>
+            def generar_puntos(n):
+              puntos = []
+              for i in range(n):
+                  r = invF(random.uniform(0, 1)) # Generar r con distribución Fr(x) (x^2 en este caso)
+
+                  z1 = random.gauss(0, 1)  # Generar z1 con distribución normal
+                  z2 = random.normalvariate(0, 1) # Generar z2 con distribución normal
+                  x1 = r*z1/np.sqrt(np.power(z1, 2) + np.power(z2, 2)) # Calcular x1
+                  x2 = r*z2/np.sqrt(np.power(z1, 2) + np.power(z2, 2)) # Calcular x2
+
+                  # reducir el radio a 0.4 y centrar el circulo en (0.5, 0.5)
+                  x1 = 0.4*x1 + 0.5
+                  x2 = 0.4*x2 + 0.5
+
+                  puntos.append((x1, x2)) # Agrega el punto a la lista de puntos
+              return puntos
+        </strong>
+      </code>
+    </pre>
+
+    <p>
+      r se genera con una distribución Fr(x) = x^2, para esto se utiliza el Método de la transformada inversa como dada en el pdf <a href="https://eva.fing.edu.uy/pluginfile.php/161905/mod_resource/content/7/Unidad4-Sesion11.pdf">Unidad4-Sesion11 (página 13). </a> <br>
+      El teorema dice: 
+      Sea F(z), a ≤ z ≤ b una función de distribución, y su inversa F^−1 definida por F^−1(u) = inf{z ∈ [a, b] : F(z) ≥ u, 0 ≤ u ≤ 1}. <br>
+      Sea U una variable aleatoria de distribución uniforme U(0, 1). Entonces Z = F^−1(U) es una variable aleatoria de distribución F.
+      el pseudocódigo de la función invF es el siguiente:
+    </p>
+    <pre>
+      <code>
+        <strong>
+          def invF(u):
+            a, b = 0, 1
+            z = np.linspace(a, b, 1000)
+            Fz = F(z)
+            idx = np.where(Fz >= u)[0][0]
+            return z[idx]
+        </strong>
+      </code>
+    </pre>
+
+    <p> 
+      Pero es facil de ver que F(z) = z^2, por lo tanto, la función invF queda de la siguiente forma:
+    </p>
+    <pre>
+      <code>
+        <strong>
+          def invF(u):
+            return np.sqrt(u)
+        </strong>
+      </code>
+    </pre>
+    
+    <p>
+      Para generar z1 y z2 se utiliza la función gaussiana gauss y normalvariate de la biblioteca random de python. <br>
+    </p>
+
+    <p> 
+      De esta forma se generan los puntos (x1, x2) que se encuentran dentro del círculo de radio 0.4 y centro (0.5, 0.5). <br>
+      Luego se calcula la estimación de la integral de la misma forma que en el ejercicio 6.1 <br>
     </p>
     <p>
-      El resultado es: 13.665.896 <br>
-      (Es la cantidad de muestras necesarias para que el error sea menor a 10^-3 y el nivel de confianza sea 0.95)
+      <strong> Nota: </strong> Se puede ver facilmente que todos los puntos caen dentro del círculo de radio 0.4 y centro (0.5, 0.5) en el siguiente <a href="./grafico.png">gráfico</a>
+    </p>
+
+    <h2> Resultados </h2>
+    <h3>
+      El resultado de el ejercicio .1 fue es el siguiente:
+    </h3>
+    <h3> Parte a</h3>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3406159683002234</td><td>3.557255724673893</td><td>3.5572557246738928e-06</td><td>[1.3369193412726463, 1.3443125953278006]</td><td>15.057658433914185</td></tr></table>
+    <h3> Parte b</h3>
+      <!-- math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2) -->
+      El resultado es: 13.665.052
     </p>
     <h3> Parte c</h3>
-    <p> Ahora con el numero de muestras necesario calculado se volvió a ejecutar el código pasando como parámetro el número de muestras calculado en la parte b y el nivel de confianza (0.95). </p>
-    <p> El resultado de la ejecución del código es el siguiente: </p>
-    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3399899305240963</td><td>3.5646348527679046</td><td>2.6084164937066e-07</td><td>[1.3389889248024447, 1.340990936245748]</td><td>70.68711805343628</td></tr></table>
+    <table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>1.3401889134211526</td><td>3.556016174401155</td><td>2.6022705031793185e-07</td><td>[1.3391890876874235, 1.3411887391548818]</td><td>208.6241328716278</td></tr></table>
+    
+    <p>
+      <strong> Nota: </strong> La parte a soluciona el ejercicio planteado a resolver. <br>
+    </p>
+
+    <h2>Concluciones</h2>
+
+    <p>La siguiente tabla es la comparación de los resultados de la parte 11.1 y 6.1 </p>
+
+    <table> <tr><th>Parte</th><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>6.1 a</td><td>1.3371610906796791</td><td>3.5574755592356313</td><td>3.5574755592356312e-06</td><td>[1.333464349430088, 1.3408578319292703]</td><td>4.47283673286438</td></tr><tr><td>11.1 a</td><td>1.3406159683002234</td><td>3.557255724673893</td><td>3.5572557246738928e-06</td><td>[1.3369193412726463, 1.3443125953278006]</td><td>15.057658433914185</td></tr></table>
+
+    <table>
+      <tr><th>Parte</th><th>Resultado</th></tr>
+      <tr><td>6.1 b</td><td> 13.665.896</td></tr>
+      <tr><td>11.1 b</td><td>13.665.052</td></tr>
+    </table>
+
+    <table> <tr><th>Parte</th><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr><tr><td>6.1 c</td><td>1.3399899305240963</td><td>3.5646348527679046</td><td>2.6084164937066e-07</td><td>[1.3389889248024447, 1.340990936245748]</td><td>70.68711805343628</td></tr><tr><td>11.1 c</td><td>1.3401889134211526</td><td>3.556016174401155</td><td>2.6022705031793185e-07</td><td>[1.3391890876874235, 1.3411887391548818]</td><td>208.6241328716278</td></tr></table>
+    
+    
+    <h3>
+      Concluciones
+    </h3>
+    <p>
+      Es claro por el tamaño de el intervalo de confianza que el método 11 es más preciso que el método 6. <br>
+      Además la varianza del estimador del método 11 es menor que la del método 6. <br>
+      Tambien se puede ver que la integral de los dos metodos caen dentro del intervalo de confianza del otro método lo que indica que los dos métodos son correctos. <br>
     <p>
       Entorno de ejecución:
       <ul>
@@ -202,6 +298,7 @@
         <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y, por lo tanto, continuando con la secuencia del random).</li>
       </ul>
     </p>
+    
     <p>
       <strong>Para ejecutar el código:</strong> <br>
       <ul>
@@ -209,7 +306,8 @@
           <strong>El código del programa se encuentra en el archivo <a href="./code.py">code.py</a></strong>
         </li>
         <li>
-        <strong>Es necesario instalar la biblioteca stats</strong> se puede hacer ejecutando: <i>pip install stats</i> (esta librería se utiliza para calcular la inversa de la normal)
+          <strong>Es necesario instalar la biblioteca stats</strong> se puede hacer ejecutando: <i>pip install stats</i> (esta librería se utiliza para calcular la inversa de la normal) <br>
+          <strong>Es necesario instalar la biblioteca numpy</strong> se puede hacer ejecutando: <i>pip install numpy</i> (esta librería se utiliza para calcular la inversa de la normal)
         </li>
         <li>
           <strong>Para ejecutar el código</strong> <i>ejecutar: python code.py</i>

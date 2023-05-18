@@ -118,7 +118,7 @@ def plot_graph(n):
     
 
 
-plot_graph(1000)
+# plot_graph(1000)
 # plot_graph(10000)
 # plot_graph(100000)
 
@@ -140,7 +140,7 @@ def IntegracionMonteCarlo(funcion, n, nivel_confianza):
         if j > 1:
             T = T + (1 - 1/j) * (funcion(x_al,y_al) - (S / (j-1)))**2
         S = S + funcion(x_al,y_al)
-    estimacion_integral = (S / n) * (0.4**2 * math.pi)
+    estimacion_integral = (S / n) * (0.4**2 * math.pi) # multiplicamos por el area del circulo
     estimacion_varianza = T / (n - 1)
     estimacion_varianza_integral = estimacion_varianza / n
     
