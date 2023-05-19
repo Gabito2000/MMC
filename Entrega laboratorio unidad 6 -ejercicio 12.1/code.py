@@ -64,8 +64,6 @@ def calculo_cobertura(n_N, delta):
     print("Tiempo de ejecución: ", fin - inicio)
     print ("---------------------------------")
 
-particiones = [0, 0.72, 0.83, 0.90, 0.95, 1]
-
 def calcularte_number_of_experiments_by_size(size_of_partition, size_of_domain, n):
     return math.ceil(size_of_partition * n / size_of_domain)
 
@@ -84,10 +82,10 @@ def IntegracionMonteCarloPorPartesfuncion(funcion, n, nivel_confianza, partition
 
         if experiments_proportionals_to_size_of_partition:
             n_of_partition = calcularte_number_of_experiments_by_size(partitionEnd - partitionInit, 1, n)
-            p_i = 1 / (partitionEnd - partitionInit)
+            p_i = (partitionEnd - partitionInit)
         else:
             n_of_partition = math.ceil(n/len(partitions))
-            p_i = 1 / (1/len(partitions))
+            p_i = 1/5
 
         
         S = 0
@@ -97,7 +95,11 @@ def IntegracionMonteCarloPorPartesfuncion(funcion, n, nivel_confianza, partition
             x2 = random.uniform(0,1)
             x3 = random.uniform(0,1)
             x4 = random.uniform(0,1)
-            x5 = random.uniform(partitionInit, partitionEnd)
+            if experiments_proportionals_to_size_of_partition:
+                x5 = random.uniform(partitionInit, partitionEnd)
+            else:
+                x5 = random.uniform(p/5, (p+1)/5)
+            
             xAll = [x1, x2, x3, x4, x5]
             yAll = calculate_Y(xAll)
 
@@ -109,8 +111,8 @@ def IntegracionMonteCarloPorPartesfuncion(funcion, n, nivel_confianza, partition
 
         
 
-        estimacion_integral = S / n_of_partition / p_i
-        estimacion_varianza = (T / (n_of_partition - 1)) / p_i
+        estimacion_integral = S / n_of_partition * p_i
+        estimacion_varianza = (T / (n_of_partition - 1)) * p_i
         estimacion_varianza_integral = estimacion_varianza / n_of_partition
 
         arrayOut.append([estimacion_integral, estimacion_varianza_integral, estimacion_varianza])
@@ -142,7 +144,10 @@ print ("---------------------------------")
 print("Sin tomar encuenta el tamaño de las particiones")
 
 
+particiones = [0, 0.72, 0.83, 0.90, 0.95, 1]
+
 nivel_confianza = 0.95
+delta = 1- nivel_confianza
 estimacion_integral, estimacion_varianza_integral, estimacion_varianza,intervalo_de_confianza, tiempo_ejecucion = IntegracionMonteCarloPorPartesfuncion(f2, 10**6, nivel_confianza, particiones, False)
 
 print("Estimación: ", estimacion_integral)
@@ -152,7 +157,6 @@ print("Intervalo de confianza: ", intervalo_de_confianza)
 print("Tiempo de ejecución: ", tiempo_ejecucion)
 
 print ("---------------------------------")
-
 print("Tomando encuenta el tamaño de las particiones")
 estimacion_integral, estimacion_varianza_integral, estimacion_varianza,intervalo_de_confianza, tiempo_ejecucion = IntegracionMonteCarloPorPartesfuncion(f2, 10**6, nivel_confianza, particiones, True)
 
@@ -162,8 +166,26 @@ print("estimacion_varianza_integral",estimacion_varianza_integral)
 print("Intervalo de confianza: ", intervalo_de_confianza)
 print("Tiempo de ejecución: ", tiempo_ejecucion)
 
+print ("---------------------------------")
 
-            
-            
-            
-    
+
+
+# Estimacion 6.2
+# Estimación:  0.001393239485866339
+# estimacion_varianza 9.658300492263539e-05
+# estimacion_varianza_integral 9.658300492263539e-11
+# Número de muestras:  37102
+# Parte 3
+# Sin tomar encuenta el tamaño de las particiones
+# Estimación:  0.0013778184874532436
+# estimacion_varianza 4.42995905779908e-05
+# estimacion_varianza_integral 2.6579701187392104e-10
+# Intervalo de confianza:  [0.0013777865336072187, 0.0013778504412992685]
+# Tiempo de ejecución:  2.576040744781494
+# ---------------------------------
+# Tomando encuenta el tamaño de las particiones
+# Estimación:  0.0013847332539588938
+# estimacion_varianza 4.5309565991047415e-05
+# estimacion_varianza_integral 4.2896870482565053e-10
+# Intervalo de confianza:  [0.0013846926600478361, 0.0013847738478699515]
+# Tiempo de ejecución:  3.0336995124816895
