@@ -1,64 +1,169 @@
+# Ejercicio 14.1 (grupal): Partiendo de uno de los c´odigos elaborados para
+# resolver el ejercicio 6.2, utilizar el m´etodo de muestreo estratificado para
+# calcular la integral de la funci´on x1x
+# 2
+# 2x
+# 3
+# 3x
+# 4
+# 4x
+# 5
+# 5
+# sobre el hipercubo J
+# m de
+# dimensi´on m = 5 en base a 106
+# iteraciones. Calcular media, desviaci´on
+# est´andar y un intervalo de confianza de nivel 95%.
+# Comparar con los resultados obtenidos con el c´odigo del ejercicio 6.2.
+# Sugerencia: definir 5 estratos, en funci´on del valor de x5, tomando los
+# siguientes intervalos:
+# [0, 0.72), [0.72, 0.83), [0.83, 0.90), [0.90, 0.95), [0.95, 1]. Hacer dos
+# experimentos, uno tomando 106/5 iteraciones en cada estrato, otro
+# tomando una cantidad de iteraciones proporcional a la probabilidad de
+# cada estrato.
+# Fecha entrega: Ver cronograma del curso.
+
+
 import random
 import math
-import sys
+import scipy.stats as stats
 import time
+
 random.seed(1402)
-ejecutar_solo_una_parte = len(sys.argv) == 3
-# Declare the required variables
-if not ejecutar_solo_una_parte:
-    print("Se ejecutar ́an todos los problemas.\nPara ver el resultado de un problema espec ́ıfico: python code.py tamaño_de_muesta tiene_restricciones(y/n)\n example: python code.py 10000 y")
 
-c1 = 0.45
-c2 = 0.5
-c3 = 0.6
-c4 = 0.6
-c5 = 0.5
-c6 = 0.45
-r = 0.35
-generar_tabla = False
-def calculateVolume(tamaño_de_muesta, tiene_restricciones):
-    estimado = 0
-    for i in range(tamaño_de_muesta):
-        # Generar las coordenadas de un punto aleatorio en el cubo [0, 1]^6
-        x1, x2, x3, x4, x5, x6 = random.random(), random.random(), random.random(), random.random(), random.random(), random.random()
-        # If est ́a dentro de la esfera
-        if ((x1 - c1)**2 + (x2 - c2)**2 + (x3 - c3)**2 + (x4 - c4)**2 + (x5 - c5)**2 + (x6 - c6)**2) <= r**2:
-            if tiene_restricciones:
-                if (3*x1 + 7*x4 <= 5) and (x3 + x4 <= 1) and (x1 - x2 - x5 + x6 >= 0):
-                    estimado += 1
-            else:
-                estimado += 1
+print_tables = False
+
+def  Calculo_intervalo_de_confianza(delta, estimado, n, varianza):
+    CI_i = estimado - stats.norm.ppf(1 - delta/2) * math.sqrt(varianza/n)
+    CI_f = estimado + stats.norm.ppf(1 - delta/2) * math.sqrt(varianza/n)
+    return [CI_i, CI_f]
+
+def generate_html_table(estimacion_integral, estimacion_varianza_integral, intervalo_confianza, estimacion_varianza, tiempo_ejecucion):
+    tabla_html = "<table><tr><th>Estimación</th><th>Varianza del estimador</th><th>Variaza de la integral</th><th>Intervalo de confianza</th><th>Tiempo de ejecución</th> </tr>"
+    tabla_html += "<tr><td>" + str(estimacion_integral) + "</td><td>" + str(estimacion_varianza) + "</td><td>" + str(estimacion_varianza_integral) + "</td><td>" + str(intervalo_confianza) + "</td><td>" + str(tiempo_ejecucion) + "</td></tr>"
+    tabla_html += "</table>"
+    return tabla_html
+
+def nN(epsilon, delta, estimacion_varianza):
+    return math.ceil((stats.norm.ppf(1 - delta/2))**2 * (estimacion_varianza) / epsilon**2)
+
+def f2(xAll):
+    x1 = xAll[0]
+    x2 = xAll[1]
+    x3 = xAll[2]
+    x4 = xAll[3]
+    x5 = xAll[4]
+    return (x1 * x2**2 * x3**3 * x4**4 * x5**5)
+
+def calculo_cobertura(n_N, delta):
+    inicio = time.time()
+    cob_empi1 = esti_empi(n_N, delta=delta)
+    fin = time.time()
+    print ("---------------------------------")
+    print("Cobertura empírica con delta " + str(delta) + ": ", cob_empi1)
+    print("Tiempo de ejecución: ", fin - inicio)
+    print ("---------------------------------")
+
+particiones = [0, 0.72, 0.83, 0.90, 0.95, 1]
+
+def calcularte_number_of_experiments_by_size(size_of_partition, size_of_domain, n):
+    return math.ceil(size_of_partition * n / size_of_domain)
+
+def calculate_Y(xAll):        
+    #hago 1-xi para todas las entradas de xAll
+    return [1 - xi for xi in xAll]
+
+def IntegracionMonteCarloPorPartesfuncion(funcion, n, nivel_confianza, partitions, experiments_proportionals_to_size_of_partition):
+    tiempo_inicial = time.time()
+
+    arrayOut = []
+    for p in range(0, len(partitions) - 1):
+        partitionInit = partitions[p]
+        partitionEnd = partitions[p+1]
+        n_of_partition = 0
+
+        if experiments_proportionals_to_size_of_partition:
+            n_of_partition = calcularte_number_of_experiments_by_size(partitionEnd - partitionInit, 1, n)
+            p_i = 1 / (partitionEnd - partitionInit)
+        else:
+            n_of_partition = math.ceil(n/len(partitions))
+            p_i = 1 / (1/len(partitions))
+
+        
+        S = 0
+        T = 0
+        for j in range(1, n_of_partition):
+            x1 = random.uniform(0,1)
+            x2 = random.uniform(0,1)
+            x3 = random.uniform(0,1)
+            x4 = random.uniform(0,1)
+            x5 = random.uniform(partitionInit, partitionEnd)
+            xAll = [x1, x2, x3, x4, x5]
+            yAll = calculate_Y(xAll)
+
+            W = (funcion(xAll) + funcion(yAll))/2
+            S += W
+            if j > 1:
+                T = T + (1-(1/j))*(W -  (S/(j-1)))**2
 
 
-    estimado /= tamaño_de_muesta
-    estimado_desviación = math.sqrt(estimado * (1 - estimado) / (tamaño_de_muesta - 1))
-    return estimado, estimado_desviación
+        
 
-def calculateExactVolume():
-    volumenExacto = math.pi**(6/2) * r**6 / 6
-    print("Volumen exacto:", volumenExacto)
-    return volumenExacto
+        estimacion_integral = S / n_of_partition / p_i
+        estimacion_varianza = (T / (n_of_partition - 1)) / p_i
+        estimacion_varianza_integral = estimacion_varianza / n_of_partition
 
-resultados = {}
-def ejecutarParte( parte, tamaño_de_muesta, tiene_restricciones):
-    start_time = time.time()
-    retultado = calculateVolume(tamaño_de_muesta, tiene_restricciones)
-    tiempo_de_ejecucion = time.time() - start_time
-    resultados[parte] = [retultado[0], retultado[1], tiempo_de_ejecucion]
-    print("Parte", parte, "tiempo de ejecución:", tiempo_de_ejecucion, "seconds")
-    print("estimado:", retultado[0], "estimado_desviación:", retultado[1])
-    return retultado
-if ejecutar_solo_una_parte:
-    ejecutarParte("Input_"+str(sys.argv[1])+"_"+str(sys.argv[2]), int(sys.argv[1]), sys.argv[2] == "y")
-    open("resultados"+str(sys.argv[1])+"_"+str(sys.argv[2])+".html", "w").write("<table><tr><th>Parte</th><th>Estimado</th><th>Estimado Desviaci ́on</th><th>Tiempo de ejecución</th></tr> <tr><td>"+str(sys.argv[1])+"_"+str(sys.argv[2])+"</td><td>"+str(resultados["Input_"+str(sys.argv[1])+"_"+str(sys.argv[2])][0])+"</td><td>"+str(resultados["Input_"+str(sys.argv[1])+"_"+str(sys.argv[2])][1])+"</td><td>"+str(resultados["Input_"+str(sys.argv[1])+"_"+str(sys.argv[2])][2])+"</td></tr></table>")
-else:
-    ejecutarParte("A1", 10000, True)
-    ejecutarParte("A2", 1000000, True)
-    ejecutarParte("B", 1000000, False)
-    volumenExacto = calculateExactVolume()
-    print ("Resultados:")
-    for key in resultados:
-        print(key, "estimado:", resultados[key][0], "estimado_desviación:", resultados[key][1], "tiempo_de_ejecución:", resultados[key][2])
-        print ("Volumen exacto:", volumenExacto)
-        if generar_tabla:
-            open("tabla_ejercicio_3_1.html", "w").write("<table>Ejercicio A<tr><td></td> <td>Estimado</td><td>Desviaci ́on est ́andar</td><td>Tiempo de ejecución</td></tr><tr><td>A1</td><td>" + str(resultados["A1"][0]) + "</td><td>" + str(resultados["A1"][1]) + "</td><td>" + str(resultados["A1"][2]) + "</td></tr><tr><td>A2</td><td>" + str(resultados["A2"][0]) + "</td><td>" + str(resultados["A2"][1]) + "</td><td>" + str(resultados["A2"][2]) + "</td></tr></table><table>Ejercicio B<tr><td>Valor calculado</td><td>Valor_exacto</td><td>Porcentaje de error</td><td>Desviaci ́on est ́andar</td></tr><tr><td>" + str(resultados["B"][0]) + "</td><td>" + str(volumenExacto) + "</td><td>" + str((abs(resultados["B"][0] - volumenExacto)) / volumenExacto * 100) + "%</td><td>" + str(resultados["B"][1]) + "</td></tr></table>")
+        arrayOut.append([estimacion_integral, estimacion_varianza_integral, estimacion_varianza])
+    
+
+    sum_estimacion_integral = 0
+    sum_estimacion_varianza_integral = 0
+    sum_estimacion_varianza = 0
+    for i in range(len(arrayOut)):
+        sum_estimacion_integral += arrayOut[i][0]
+        sum_estimacion_varianza_integral += arrayOut[i][1]
+        sum_estimacion_varianza += arrayOut[i][2]
+    
+    tiempo_final = time.time()
+
+    tiempo_ejecucion = tiempo_final - tiempo_inicial
+
+    intervalo_de_confianza = Calculo_intervalo_de_confianza (1-nivel_confianza, sum_estimacion_integral,n, sum_estimacion_varianza_integral)
+
+    return  sum_estimacion_integral, sum_estimacion_varianza_integral, sum_estimacion_varianza, intervalo_de_confianza, tiempo_ejecucion
+        
+
+
+
+print("Ejercicio 14.1")
+vreal = (1/2)*(1/3)*(1/4)*(1/5)*(1/6)
+print("Valor real: ", vreal)
+print ("---------------------------------")
+print("Sin tomar encuenta el tamaño de las particiones")
+
+
+nivel_confianza = 0.95
+estimacion_integral, estimacion_varianza_integral, estimacion_varianza,intervalo_de_confianza, tiempo_ejecucion = IntegracionMonteCarloPorPartesfuncion(f2, 10**6, nivel_confianza, particiones, False)
+
+print("Estimación: ", estimacion_integral)
+print("estimacion_varianza",estimacion_varianza)
+print("estimacion_varianza_integral",estimacion_varianza_integral)
+print("Intervalo de confianza: ", intervalo_de_confianza)
+print("Tiempo de ejecución: ", tiempo_ejecucion)
+
+print ("---------------------------------")
+
+print("Tomando encuenta el tamaño de las particiones")
+estimacion_integral, estimacion_varianza_integral, estimacion_varianza,intervalo_de_confianza, tiempo_ejecucion = IntegracionMonteCarloPorPartesfuncion(f2, 10**6, nivel_confianza, particiones, True)
+
+print("Estimación: ", estimacion_integral)
+print("estimacion_varianza",estimacion_varianza)
+print("estimacion_varianza_integral",estimacion_varianza_integral)
+print("Intervalo de confianza: ", intervalo_de_confianza)
+print("Tiempo de ejecución: ", tiempo_ejecucion)
+
+
+            
+            
+            
+    
