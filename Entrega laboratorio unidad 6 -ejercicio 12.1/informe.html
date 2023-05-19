@@ -1,0 +1,316 @@
+<!--
+PAUTAS sobre cómo ENTREGAR los EJERCICIOS realizados
+Algunos ejercicios se realizarán de forma individual; para otros se requerirá trabajar en grupos de 2
+estudiantes.
+Cada ejercicio debe ser entregado mediante un breve pero claro informe (en formato .pdf, .ps, o
+.html) indicando:
+I. La identificación del ejercicio (nro. de sesión, nro. de ejercicio si corresponde).
+II. Nro de grupo asignado, Nombres completos y CI de sus integrantes.
+III. La descripción del problema (texto del ejercicio).
+IV. Una breve descripción de la solución (seudocódigo, y descripción de técnicas avanzadas si
+las hubiera). Lenguaje de implementación y bibliotecas empleadas (adjuntar el código
+fuente).
+V. En caso de pedirse resultados computacionales, se debe reportar: 0) la plataforma de
+cómputo utilizada (computadora – modelo, procesador, memoria, sistema operativo) 1) las
+semillas empleadas; 2) los tamaños de muestra, y tiempos de cálculo; 3) todos los valores de
+parámetros de entrada, tanto del problema como de configuración de las técnicas si los
+hubiera; 4) los resultados numéricos incluyendo estimaciones puntuales, varianzas o
+desviaciones estándar, e intervalos de confianza (con al menos 4 cifras significativas).
+VI. Se adjuntará también un anexo con el log de las ejecuciones (identificando sus respectivos
+parametros) y de las salidas de los programas (tanto si es en pantalla como en archivos).
+ El informe se subirá en el lugar de entrega de la plataforma EVA de cada Unidad. Bajo ningún
+concepto podrá ser publicado en las news del curso 2010, ni en los foros del curso.
+-->
+
+
+<!--Ejercicio 14.1 (grupal): Partiendo de uno de los c´odigos elaborados para
+resolver el ejercicio 6.2, utilizar el m´etodo de muestreo estratificado para
+calcular la integral de la funci´on x1x
+2
+2x
+3
+3x
+4
+4x
+5
+5
+sobre el hipercubo J
+m de
+dimensi´on m = 5 en base a 106
+iteraciones. Calcular media, desviaci´on
+est´andar y un intervalo de confianza de nivel 95%.
+Comparar con los resultados obtenidos con el c´odigo del ejercicio 6.2.
+Sugerencia: definir 5 estratos, en funci´on del valor de x5, tomando los
+siguientes intervalos:
+[0, 0.72), [0.72, 0.83), [0.83, 0.90), [0.90, 0.95), [0.95, 1]. Hacer dos
+experimentos, uno tomando 106/5 iteraciones en cada estrato, otro
+tomando una cantidad de iteraciones proporcional a la probabilidad de
+cada estrato.
+-->
+<!-- Resultados
+# Valor real:  0.0013888888888888887
+# ---------------------------------
+# Estimacion 6.2
+# Estimación:  0.001393239485866339
+# estimacion_varianza 9.658300492263539e-05
+# estimacion_varianza_integral 9.658300492263539e-11
+# Número de muestras:  37102
+# Parte 3
+---------------------------------
+Sin tomar encuenta el tamaño de las particiones
+Estimación:  0.0013778184874532436
+estimacion_varianza 8.85991811559816e-06
+estimacion_varianza_integral 5.315940237478422e-11
+Intervalo de confianza:  [0.001371984534197021, 0.0013836524407094663]
+Tiempo de ejecución:  3.43623685836792
+---------------------------------
+Tomando encuenta el tamaño de las particiones
+Estimación:  0.0013847332539588938
+estimacion_varianza 1.7901452171553825e-05
+estimacion_varianza_integral 4.530930774243382e-11
+Intervalo de confianza:  [0.0013764406252232244, 0.0013930258826945633]
+Tiempo de ejecución:  3.8381893634796143
+--------------------------------- -->
+<doctype html>
+
+  <html>
+  
+  <head>
+  
+  <meta charset="utf-8">
+  
+  <title>Ejercicio 14.1</title>
+  
+  <style type="text/css">
+  
+  /* Set font family and size for the entire document */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  /* Style headings */
+  h1 {
+    font-size: 24px;
+    margin-top: 20px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-top: 15px;
+  }
+  
+  /* Add padding to paragraphs */
+  p {
+    padding-bottom: 10px;
+  }
+  
+  /* Style span snippets */
+  span {
+    background-color: #f5f5f5;
+    padding: 2px 4px;
+    font-size: 90%;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Style tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  /* Add a gray background color to the page */
+  body {
+    background-color: #f5f5f5;
+  }
+  
+  /* Add a box shadow to the main content area */
+  main {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #ddd;
+  }
+  
+  
+  </style>
+  
+  </head>
+  
+  <body>
+
+  <h1>Ejercicio 14.1</h1>
+
+  <h2> Grupo: N/A</h2>
+
+  <h2> Integrantes: </h2>
+  <ul>
+  <li>Nombre: Gabriel Kryger</li>
+  <li>CI: 4933558-9</li>
+  </ul>
+
+  <h2> Descripción del problema </h2>
+  <p> 
+    Partiendo de uno de los códigos elaborados para resolver el ejercicio 6.2, utilizar el método de muestreo estratificado para calcular la integral de la función x1*x2^2*x3^3*x4^4*x5^5 sobre el hipercubo Jm de dimensión m = 5 en base a 10^6 iteraciones. Calcular media, desviación estándar y un intervalo de confianza de nivel 95%.
+    <br>
+    Comparar con los resultados obtenidos con el código del ejercicio 6.2.
+    <br>
+    Sugerencia: definir 5 estratos, en función del valor de x5, tomando los siguientes intervalos: [0, 0.72), [0.72, 0.83), [0.83, 0.90), [0.90, 0.95), [0.95, 1]. Hacer dos experimentos, uno tomando 10^6/5 iteraciones en cada estrato, otro tomando una cantidad de iteraciones proporcional a la probabilidad de cada estrato.
+  </p>
+  <h2> Descripción de la solución </h2>
+
+  <p>Para calcular la itegral y la varianza se tilizaron las definiciones dadas en la página 11 y 12 del <a href="https://eva.fing.edu.uy/pluginfile.php/163723/mod_resource/content/7/Unidad5-Sesion14.pdf">pdf</a> del curso. <br> siendo es </p>
+  <p>
+    siendo estas:
+      <!-- \zeta(n_{1}, ..., n_{r}) = \sum_{i=1}^{r} p_{i} \zeta_{i} -->
+      <img src="https://latex.codecogs.com/gif.latex?%5Czeta%28n_%7B1%7D%2C%20.%20.%20.%2C%20n_%7Br%7D%29%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Br%7D%20p_%7Bi%7D%20%5Czeta_%7Bi%7D">
+      <!-- Var(ζ(n1, . . . , nr)) = \sum_{i=1}^{r} p_{i}^2 σ_{i}ˆ2/n_{i} -->
+      <br>
+      <img src="https://latex.codecogs.com/svg.latex?Var(\zeta(n_{1},...,n_{r}))=\sum_{i=1}^{r}p_{i}^{2}\sigma_{i}^{2}/n_{i}" title="Var(\zeta(n_{1},...,n_{r}))=\sum_{i=1}^{r}p_{i}^{2}\sigma_{i}^{2}/n_{i}" />
+  </p>
+  <p> Para calcular el valor de cada estrato se utilizó el algoritmo provisto en la página 17 del <a href="https://eva.fing.edu.uy/pluginfile.php/163723/mod_resource/content/7/Unidad5-Sesion14.pdf">pdf</a> del curso. </p>
+
+  <h2> Implementación de la solución </h2>
+  <p> Daremos a continuacion la implementancion de el cálgulo de la integral y la varianza.</p>
+  <pre>
+    <code>
+      <strong>
+
+        def IntegracionMonteCarloPorPartesfuncion(funcion, n, nivel_confianza, partitions, experiments_proportionals_to_size_of_partition):
+          tiempo_inicial = time.time()
+          arrayOut = []
+          for p in range(0, len(partitions) - 1):
+              partitionInit = partitions[p]
+              partitionEnd = partitions[p+1]
+              n_of_partition = 0
+
+              if experiments_proportionals_to_size_of_partition:
+                  n_of_partition = calcularte_number_of_experiments_by_size(partitionEnd - partitionInit, 1, n)
+                  p_i = (partitionEnd - partitionInit)
+              else:
+                  n_of_partition = math.ceil(n/len(partitions))
+                  p_i = 1/5
+
+              
+              S = 0
+              T = 0
+              for j in range(1, n_of_partition):
+                  x1 = random.uniform(0,1)
+                  x2 = random.uniform(0,1)
+                  x3 = random.uniform(0,1)
+                  x4 = random.uniform(0,1)
+                  if experiments_proportionals_to_size_of_partition:
+                      x5 = random.uniform(partitionInit, partitionEnd)
+                  else:
+                      x5 = random.uniform(p/5, (p+1)/5)
+                  
+                  xAll = [x1, x2, x3, x4, x5]
+                  yAll = calculate_Y(xAll)
+
+                  W = (funcion(xAll) + funcion(yAll))/2
+                  S += W
+                  if j > 1:
+                      T = T + (1-(1/j))*(W -  (S/(j-1)))**2
+
+
+              
+
+              estimacion_integral = S / n_of_partition * p_i
+              estimacion_varianza = (T / (n_of_partition - 1)) * p_i**2
+              estimacion_varianza_integral = estimacion_varianza / n_of_partition
+
+              arrayOut.append([estimacion_integral, estimacion_varianza_integral, estimacion_varianza])
+          
+
+        sum_estimacion_integral = 0
+        sum_estimacion_varianza_integral = 0
+        sum_estimacion_varianza = 0
+        for i in range(len(arrayOut)):
+            sum_estimacion_integral += arrayOut[i][0]
+            sum_estimacion_varianza_integral += arrayOut[i][1]
+            sum_estimacion_varianza += arrayOut[i][2]
+        
+        tiempo_final = time.time()
+
+        tiempo_ejecucion = tiempo_final - tiempo_inicial
+
+        intervalo_de_confianza = Calculo_intervalo_de_confianza (1-nivel_confianza, sum_estimacion_integral,n, sum_estimacion_varianza)
+
+        return  sum_estimacion_integral, sum_estimacion_varianza_integral, sum_estimacion_varianza, intervalo_de_confianza, tiempo_ejecucion
+
+      </strong>
+    </code>
+  </pre>
+
+  <h3> El resultado es el siguiente: </h3>
+  <p>
+    <table><tr><th> Experimento </th><th> Estimacion </th><th> Varianza </th><th> Varianza de la integral </th><th> Intervalo de confianza </th><th> Tiempo de ejecución </th></tr>
+    <tr><td> 6.2 </td><td> 0.001393239485866339 </td><td> 9.658300492263539e-05 </td><td> 9.658300492263539e-11 </td><td> [0.0013874055326101167, 0.001399073439122562] </td><td> 0.0009970664978027344 </td></tr>
+    <tr><td> 14.1 Sin tomar encuenta el tamaño de las particiones </td><td> 0.0013778184874532436 </td><td> 8.85991811559816e-06 </td><td> 5.315940237478422e-11 </td><td> [0.001371984534197021, 0.0013836524407094663] </td><td> 3.43623685836792 </td></tr>
+    <tr><td> 14.1 Tomando encuenta el tamaño de las particiones </td><td> 0.0013847332539588938 </td><td> 1.7901452171553825e-05 </td><td> 4.530930774243382e-11 </td><td> [0.0013764406252232244, 0.0013930258826945633] </td><td> 3.8381893634796143 </td></tr>
+    <tr><td> Valor real</td> <td> 0.0013888888888888887 </td><td> - </td><td> - </td><td> - </td><td> - </td></tr> </table>
+  </p>
+ 
+  <h2>Concluciones</h2>
+  <p>
+    <ul>
+      <!--  Es facil de ver como el didvidir el intervalo en particiones disminuye el valor de la varianza y, por lo tanto, el tamaño de el intervalo_de_confianza.
+    por lo tanto, se puede decir que el método aplicado en las partes 14.1 (dividir en estratos), es más preciso que el método aplicado en la parte 6.2.
+
+    Tambien se puede ver como el tiempo de ejecución es mayor en el método de estratos, esto se puede deber a una peor implementación del código o a que el método de estratos es más costoso computacionalmente.
+
+    Por úlimo es interesante notar que el dividir los experimentos proporcionalmente al tamaño del estrato logró un mejor resultado a la hora de estimar la 
+    integral, pero tienen mayor varianza y, por lo tanto, un intervalo de confianza más grande. -->
+      <li>
+        Es facil de ver como el didvidir el intervalo en particiones disminuye el valor de la varianza y, por lo tanto, el tamaño de el intervalo_de_confianza. Por lo tanto, se puede decir que el método aplicado en las partes 14.1 (dividir en estratos), es más preciso que el método aplicado en la parte 6.2.
+      </li>
+      <li>
+        Tambien se puede ver como el tiempo de ejecución es mayor en el método de estratos, esto se puede deber a una peor implementación del código o a que el método de estratos es más costoso computacionalmente.
+      </li>
+      <li>
+        Por úlimo es interesante notar que el dividir los experimentos proporcionalmente al tamaño del estrato logró un mejor resultado a la hora de estimar la integral, pero tienen mayor varianza y, por lo tanto, un intervalo de confianza más grande.
+      </li>
+    </ul>
+   
+
+  </p>
+  <p>
+    Entorno de ejecución:
+    <ul>
+      <li>Procesador Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz   2.20 GHz</li>
+      <li>4 GB de RAM</li>
+      <li>Sistema operativo: Windows 10</li>
+      <li>Se utilizó la semilla 1402 para random y se realizaron todas las pruebas de forma consecutiva (sin reiniciar el programa y, por lo tanto, continuando con la secuencia del random).</li>
+    </ul>
+  </p>
+  <p>
+    <strong>Para ejecutar el código:</strong> <br>
+    <ul>
+      <li>
+        <strong>El código del programa se encuentra en el archivo <a href="./code.py">code.py</a></strong>
+      </li>
+      <li>
+      <strong>Es necesario instalar la biblioteca stats</strong> se puede hacer ejecutando: <i>pip install stats</i> (esta librería se utiliza para calcular la inversa de la normal)
+      </li>
+      <li>
+        <strong>Para ejecutar el código</strong> <i>ejecutar: python code.py</i>
+      </li>
+    </ul>
+  </p>
+  </body>
+
+</html>
+
+  
