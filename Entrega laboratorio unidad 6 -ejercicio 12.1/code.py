@@ -55,15 +55,6 @@ def f2(xAll):
     x5 = xAll[4]
     return (x1 * x2**2 * x3**3 * x4**4 * x5**5)
 
-def calculo_cobertura(n_N, delta):
-    inicio = time.time()
-    cob_empi1 = esti_empi(n_N, delta=delta)
-    fin = time.time()
-    print ("---------------------------------")
-    print("Cobertura empírica con delta " + str(delta) + ": ", cob_empi1)
-    print("Tiempo de ejecución: ", fin - inicio)
-    print ("---------------------------------")
-
 def calcularte_number_of_experiments_by_size(size_of_partition, size_of_domain, n):
     return math.ceil(size_of_partition * n / size_of_domain)
 
@@ -112,7 +103,7 @@ def IntegracionMonteCarloPorPartesfuncion(funcion, n, nivel_confianza, partition
         
 
         estimacion_integral = S / n_of_partition * p_i
-        estimacion_varianza = (T / (n_of_partition - 1)) * p_i
+        estimacion_varianza = (T / (n_of_partition - 1)) * p_i**2
         estimacion_varianza_integral = estimacion_varianza / n_of_partition
 
         arrayOut.append([estimacion_integral, estimacion_varianza_integral, estimacion_varianza])
@@ -130,7 +121,7 @@ def IntegracionMonteCarloPorPartesfuncion(funcion, n, nivel_confianza, partition
 
     tiempo_ejecucion = tiempo_final - tiempo_inicial
 
-    intervalo_de_confianza = Calculo_intervalo_de_confianza (1-nivel_confianza, sum_estimacion_integral,n, sum_estimacion_varianza_integral)
+    intervalo_de_confianza = Calculo_intervalo_de_confianza (1-nivel_confianza, sum_estimacion_integral,n, sum_estimacion_varianza)
 
     return  sum_estimacion_integral, sum_estimacion_varianza_integral, sum_estimacion_varianza, intervalo_de_confianza, tiempo_ejecucion
         
@@ -176,16 +167,18 @@ print ("---------------------------------")
 # estimacion_varianza_integral 9.658300492263539e-11
 # Número de muestras:  37102
 # Parte 3
+# Valor real:  0.0013888888888888887
+# ---------------------------------
 # Sin tomar encuenta el tamaño de las particiones
 # Estimación:  0.0013778184874532436
-# estimacion_varianza 4.42995905779908e-05
-# estimacion_varianza_integral 2.6579701187392104e-10
-# Intervalo de confianza:  [0.0013777865336072187, 0.0013778504412992685]
-# Tiempo de ejecución:  2.576040744781494
+# estimacion_varianza 8.85991811559816e-06
+# estimacion_varianza_integral 5.315940237478422e-11
+# Intervalo de confianza:  [0.001371984534197021, 0.0013836524407094663]
+# Tiempo de ejecución:  2.5220184326171875
 # ---------------------------------
 # Tomando encuenta el tamaño de las particiones
 # Estimación:  0.0013847332539588938
-# estimacion_varianza 4.5309565991047415e-05
-# estimacion_varianza_integral 4.2896870482565053e-10
-# Intervalo de confianza:  [0.0013846926600478361, 0.0013847738478699515]
-# Tiempo de ejecución:  3.0336995124816895
+# estimacion_varianza 1.7901452171553825e-05
+# estimacion_varianza_integral 4.530930774243382e-11
+# Intervalo de confianza:  [0.0013764406252232244, 0.0013930258826945633]
+# Tiempo de ejecución:  3.012700080871582
